@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/model/Plan.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/dao/BackupDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/service/BackupService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/dao/PlanDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/tool/Rman.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/backapp/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/service/HostService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/backapp/BackApp.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/model/Cron.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/controller/CreatePlan.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/backapp/FXMLDocument.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/model/Backup.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/model/Host.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/dao/CronDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/controller/CreateBackup.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/tool/Planificateur.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/tool/Export.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/tool/Xcopy.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/service/PlanService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/dao/HostDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/BackApp/src/controller/CreateHost.java</file>
+        </group>
+    </open-files>
+</project-private>
