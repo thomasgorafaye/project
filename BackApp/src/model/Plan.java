@@ -19,6 +19,7 @@ public class Plan {
     private String objet;
     private String name;
     private String type;
+    private String method;
     private String strategy;
     private String s_repertory;
     private String d_repertory;
@@ -26,4 +27,133 @@ public class Plan {
     
     private List<Cron> crons;
     private List<Backup> backups;
+
+    public Plan() {
+    }
+
+    public Plan(int id, boolean active, String script, String objet, String name, String type, String method, String strategy, String s_repertory, String d_repertory, String log) {
+        this.id = id;
+        this.active = active;
+        this.script = script;
+        this.objet = objet;
+        this.name = name;
+        this.type = type;
+        this.method = method;
+        this.strategy = strategy;
+        this.s_repertory = s_repertory;
+        this.d_repertory = d_repertory;
+        this.log = log;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getScript() {
+        return script;
+    }
+
+    public void setScript(String script) {
+        this.script = script;
+    }
+
+    public String getObjet() {
+        return objet;
+    }
+
+    public void setObjet(String objet) {
+        this.objet = objet;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+    
+    
+
+    public String getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(String strategy) {
+        this.strategy = strategy;
+    }
+
+    public String getS_repertory() {
+        return s_repertory;
+    }
+
+    public void setS_repertory(String s_repertory) {
+        this.s_repertory = s_repertory;
+    }
+
+    public String getD_repertory() {
+        return d_repertory;
+    }
+
+    public void setD_repertory(String d_repertory) {
+        this.d_repertory = d_repertory;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public List<Cron> getCrons() {
+        return crons;
+    }
+
+    public void setCrons(List<Cron> crons) {
+        this.crons = crons;
+    }
+
+    public List<Backup> getBackups() {
+        return backups;
+    }
+
+    public void setBackups(List<Backup> backups) {
+        this.backups = backups;
+    }
+
+    @Override
+    public String toString() {
+        return "Plan{" + "id=" + id + ", active=" + active + ", script=" + script + ", objet=" + objet + ", name=" + name + ", type=" + type + ", method=" + method + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + '}';
+    }
+    
 }

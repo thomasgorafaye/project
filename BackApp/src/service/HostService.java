@@ -5,10 +5,40 @@
  */
 package service;
 
+import dao.HostDao;
+import java.util.List;
+import model.Host;
+
 /**
  *
  * @author thomas
  */
 public class HostService {
+    
+    private HostDao hostDao;
+    
+    public HostService(){
+        hostDao = new HostDao();
+    }
+    
+    public List<Host> findAll(){
+        return hostDao.findAll();
+    }
+    
+    public Host find(String sid){
+        return hostDao.find(sid);
+    }
+    
+    public boolean create(Host h){
+        return hostDao.create(h);
+    }
+    
+    public boolean update(Host h){
+        return hostDao.update(h);
+    }
+    
+     public boolean delete(Host h){
+        return hostDao.delete(h);
+    }
     
 }

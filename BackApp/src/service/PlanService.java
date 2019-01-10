@@ -5,12 +5,40 @@
  */
 package service;
 
+import dao.PlanDao;
+import java.util.List;
+import model.Plan;
+
 /**
  *
  * @author thomas
  */
 public class PlanService {
     
-    private int id;
-    private String script;
+    private PlanDao planDao;
+    
+    public PlanService(){
+        planDao = new PlanDao();
+    }
+    
+    public List<Plan> findAll(){
+        return planDao.findAll();
+    }
+    
+    public Plan find(String sid){
+        return planDao.find(sid);
+    }
+    
+    public boolean create(Plan h){
+        return planDao.create(h);
+    }
+    
+    public boolean update(Plan h){
+        return planDao.update(h);
+    }
+    
+     public boolean delete(Plan h){
+        return planDao.delete(h);
+    }
+    
 }
