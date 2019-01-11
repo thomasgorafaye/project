@@ -8,6 +8,8 @@ package service;
 import dao.BackupDao;
 import java.util.List;
 import model.Backup;
+import model.Host;
+import tool.Xcopy;
 
 /**
  *
@@ -39,6 +41,13 @@ public class BackupService {
     
      public boolean delete(Backup h){
         return backupDao.delete(h);
+    }
+     
+    public void coldBackupXcopy(Host h,Backup b){
+        Xcopy xcopy = new Xcopy();
+        xcopy.sauvegardeWindows(h, b);
+        b.setHost(h.getSid());
+        create(b);
     }
     
 }

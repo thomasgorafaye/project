@@ -32,7 +32,7 @@ public class BackupDao extends Dao {
          List<Backup> list = new ArrayList();
          while(rs.next()) { 
             // Retrieve by column name 
-            Backup h = new Backup(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9));
+            Backup h = new Backup(rs.getInt(1),rs.getDate(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getBoolean(12),rs.getBoolean(13)); 
             list.add(h);       
       
          } 
@@ -54,18 +54,18 @@ public class BackupDao extends Dao {
         return null;
     }
     
-    public Backup find(String sid){
+    public Backup find(String timestamp){
            openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "SELECT * FROM Backup where sid = "+sid; 
+         String sql = "SELECT * FROM Backup where timestamp = "+timestamp; 
          ResultSet rs = stmt.executeQuery(sql); 
          
          // STEP 4: Extract data from result set 
          Backup h = null;
          while(rs.next()) { 
             // Retrieve by column name 
-            h = new Backup(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9));      
+            h = new Backup(rs.getInt(1),rs.getDate(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getBoolean(12),rs.getBoolean(13));      
          } 
          
          // STEP 5: Clean-up environment 
@@ -90,7 +90,7 @@ public class BackupDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "INSERT INTO Backup " + "VALUES('"+h.getSid()+"','"+h.getBackupname()+"','"+h.getOwnername()+"','"+h.getEmail()+"','"+h.getOsuser()+"','"+h.getOspassword()+"','"+h.getDbuser()+"','"+h.getDbpassword()+"','"+h.getVersion()+"')"; 
+         String sql = "INSERT INTO Backup " + "VALUES('"+h.getTimestamp()+"','"+h.getDate()+"','"+h.getTime()+"','"+h.getType()+"','"+h.getMethod()+"','"+h.getObject()+"','"+h.getName()+"','"+h.getStrategy()+"','"+h.getD_repertory()+"','"+h.getLog()+"',"+h.isSuccess()+","+h.isPlanned()+",'"+h.getHost()+"',"+h.getPlan()+")"; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Inserted records into the table..."); 
@@ -112,7 +112,7 @@ public class BackupDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "Update Backup " + "Set backupname='"+h.getBackupname()+"' and ownername='"+h.getOwnername()+"' and email='"+h.getEmail()+"' and osuser='"+h.getOsuser()+"' and ospassword='"+h.getOspassword()+"' and dbuser='"+h.getDbuser()+"' and dbpassword='"+h.getDbpassword()+"' and version='"+h.getVersion()+"' where sid='"+h.getSid()+"'"; 
+         String sql = "Update Backup " + "Set date='"+h.getDate()+"' and time='"+h.getTime()+"' and type='"+h.getType()+"' and method='"+h.getMethod()+"' and object='"+h.getObject()+"' and name='"+h.getName()+"' and strategy='"+h.getStrategy()+"' and s_repertory='"+h.getS_repertory()+"' and d_repertory='"+h.getD_repertory()+"' and log='"+h.getLog()+"' and success="+h.isSuccess()+" planned="+h.isPlanned()+" where timestamp="+h.getTimestamp()+""; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Updated records into the table..."); 

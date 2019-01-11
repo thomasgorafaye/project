@@ -67,6 +67,7 @@ public class Dao {
             " hostname VARCHAR(255), " +  
             " ownername VARCHAR(255), " +   
             " email VARCHAR(255), " + 
+            " osname VARCHAR(255), " + 
             " osuser VARCHAR(255), " + 
             " ospassword VARCHAR(255), " + 
             " dbuser VARCHAR(255), " + 

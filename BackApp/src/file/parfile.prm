@@ -1,0 +1,5 @@
+userid=system/manager
+file=c:\exp_scott.dmp
+log=c:\exp_scott_log.txt
+owner=scott
+rows=n

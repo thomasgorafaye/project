@@ -21,8 +21,8 @@ import javafx.scene.control.TextField;
 public class CreatePlanController implements Initializable {
     
     @FXML
-    private Label l_sid,l_hostname,l_ownername,l_email,l_osuser,l_ospassword,l_dbuser,l_dbpassword,l_version,
-            p_sid,p_hostname,p_ownername,p_email,p_osuser,p_ospassword,p_dbuser,p_dbpassword,p_version;
+    private Label l_sid,l_hostname,l_ownername,l_email,l_osname,l_osuser,l_ospassword,l_dbuser,l_dbpassword,l_version,
+            p_sid,p_hostname,p_ownername,p_email,p_osname,p_osuser,p_ospassword,p_dbuser,p_dbpassword,p_version;
     
     @FXML
     private TextField type,method,object,name,strategy,s_repertory,d_repertory,log;

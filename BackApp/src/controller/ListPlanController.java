@@ -12,42 +12,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import model.Backup;
-import model.Host;
-import service.BackupService;
 
 /**
  *
  * @author thomas
  */
-public class CreateBackupController implements Initializable {
-    
-    @FXML
-    private Label l_sid,l_hostname,l_ownername,l_email,l_osname,l_osuser,l_ospassword,l_dbuser,l_dbpassword,l_version,
-            p_sid,p_hostname,p_ownername,p_email,p_osname,p_osuser,p_ospassword,p_dbuser,p_dbpassword,p_version;
+public class ListPlanController implements Initializable {
     
     @FXML
     private TextField type,method,object,name,strategy,s_repertory,d_repertory,log;
     
     @FXML 
-    private ListView listView;
-    
-    private BackupService backupService;
-    
-    private Host selected;
+    private TableView tableView;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       backupService = new BackupService();
-    }
-
+        // TODO
+    }    
+    
     @FXML
     private void enregistrer(ActionEvent event) {
         System.out.println("You clicked me!");
-        Backup b = new Backup();
-        backupService.coldBackupXcopy(selected, b);
-        
     }
     
     @FXML
@@ -55,5 +42,4 @@ public class CreateBackupController implements Initializable {
         System.out.println("You clicked me!");
         type.clear();method.clear();object.clear();name.clear();strategy.clear();s_repertory.clear();d_repertory.clear();log.clear();
     }
-    
 }

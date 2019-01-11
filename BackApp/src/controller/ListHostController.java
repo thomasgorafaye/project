@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableView;
 import model.Host;
 import service.HostService;
 
@@ -20,24 +21,20 @@ import service.HostService;
  *
  * @author thomas
  */
-public class CreateHostController implements Initializable {
-    
-    @FXML
-    private Label l_sid,l_hostname,l_ownername,l_email,l_osname,l_osuser,l_ospassword,l_dbuser,l_dbpassword,l_version,
-            p_sid,p_hostname,p_ownername,p_email,p_osname,p_osuser,p_ospassword,p_dbuser,p_dbpassword,p_version;
+public class ListHostController implements Initializable {
     
     @FXML
     private TextField sid,hostname,ownername,email,osname,osuser,ospassword,dbuser,dbpassword,version;
     
     @FXML 
-    private ListView listView;
+    private TableView tableView;
     
     private HostService hostService;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         hostService = new HostService();
-        listView.getItems().addAll(hostService.findAll());
+        //listView.getItems().addAll(hostService.findAll());
     } 
     
     @FXML

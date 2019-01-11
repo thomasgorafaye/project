@@ -54,11 +54,11 @@ public class PlanDao extends Dao {
         return null;
     }
     
-    public Plan find(String sid){
+    public Plan find(String id){
            openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "SELECT * FROM Plan where sid = "+sid; 
+         String sql = "SELECT * FROM Plan where id = "+id; 
          ResultSet rs = stmt.executeQuery(sql); 
          
          // STEP 4: Extract data from result set 
@@ -90,7 +90,7 @@ public class PlanDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "INSERT INTO Plan " + "VALUES('"+h.getSid()+"','"+h.getPlanname()+"','"+h.getOwnername()+"','"+h.getEmail()+"','"+h.getOsuser()+"','"+h.getOspassword()+"','"+h.getDbuser()+"','"+h.getDbpassword()+"','"+h.getVersion()+"')"; 
+         String sql = "INSERT INTO Plan " + "VALUES("+h.getId()+","+h.isActive()+",'"+h.getScript()+"','"+h.getObject()+"','"+h.getName()+"','"+h.getType()+"','"+h.getMethod()+"','"+h.getStrategy()+"','"+h.getS_repertory()+"','"+h.getD_repertory()+"','"+h.getLog()+"','"+h.getHost()+"')"; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Inserted records into the table..."); 
@@ -112,7 +112,7 @@ public class PlanDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "Update Plan " + "Set planname='"+h.getPlanname()+"' and ownername='"+h.getOwnername()+"' and email='"+h.getEmail()+"' and osuser='"+h.getOsuser()+"' and ospassword='"+h.getOspassword()+"' and dbuser='"+h.getDbuser()+"' and dbpassword='"+h.getDbpassword()+"' and version='"+h.getVersion()+"' where sid='"+h.getSid()+"'"; 
+         String sql = "Update Plan " + "Set active="+h.isActive()+" and script='"+h.getScript()+"' and object='"+h.getObject()+"' and name='"+h.getName()+"' and type='"+h.getType()+"' and method='"+h.getMethod()+"' and strategy='"+h.getStrategy()+"' and s_repertory='"+h.getS_repertory()+"'and d_repertory='"+h.getD_repertory()+"' and log='"+h.getLog()+"' where id="+h.getId()+""; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Updated records into the table..."); 

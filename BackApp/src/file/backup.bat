@@ -9,12 +9,11 @@ REM requires two sql scripts in addition to the above sql script:
 REM shutdown.sql (connect / as sysdba, shutdown transactional, exit)
 REM startup.sql (connect / as sysdba, startup open, exit)
 
-set oracle_home=d:\oracle\ora92
-set script_dir=c:\scripts\orabackup\DB
-set shutdown=%script_dir%\shutdown.sql
-set startup=%script_dir%\startup.sql
-set scriptgen=%script_dir%\make_cold_backup_scr.sql
-set log=%script_dir%\backup.log
+set oracle_home=%s_repertory
+set shutdown=shutdown.bat
+set startup=restart.bat
+set scriptgen=make_cold_backup_scr.sql
+set log=%log%\backup.log
 
 echo >> %log%
 echo ----------BEGIN FULL COLD BACKUP OF DB---------- >> %log%
@@ -30,7 +29,7 @@ echo Shutting down... >> %log%
 %oracle_home%\bin\sqlplus /nolog @%shutdown%
 
 echo Backing up... >> %log%
-call %SCRIPT_DIR%\cold_Backup.bat >> %log% 2>&1
+call cold_Backup.bat >> %log% 2>&1
 
 echo Starting up... >> %log%
 %oracle_home%\bin\sqlplus /nolog @%startup%

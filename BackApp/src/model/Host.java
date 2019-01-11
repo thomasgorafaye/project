@@ -17,6 +17,7 @@ public class Host {
     private String hostname;
     private String ownername;
     private String email;
+    private String osname;
     private String osuser;
     private String ospassword;
     private String version;
@@ -29,11 +30,12 @@ public class Host {
     public Host() {
     }
 
-    public Host(String sid, String hostname, String ownername, String email, String osuser, String ospassword, String version, String dbuser, String dbpassword) {
+    public Host(String sid, String hostname, String ownername, String email, String osname, String osuser, String ospassword, String version, String dbuser, String dbpassword) {
         this.sid = sid;
         this.hostname = hostname;
         this.ownername = ownername;
         this.email = email;
+        this.osname = osname;
         this.osuser = osuser;
         this.ospassword = ospassword;
         this.version = version;
@@ -71,6 +73,14 @@ public class Host {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getOsname() {
+        return osname;
+    }
+
+    public void setOsname(String osname) {
+        this.osname = osname;
     }
 
     public String getOsuser() {
@@ -131,7 +141,7 @@ public class Host {
 
     @Override
     public String toString() {
-        return "Host{" + "sid=" + sid + ", hostname=" + hostname + ", ownername=" + ownername + ", email=" + email + ", osuser=" + osuser + ", ospassword=" + ospassword + ", version=" + version + ", dbuser=" + dbuser + ", dbpassword=" + dbpassword + '}';
+        return "Host{" + "sid=" + sid + ", hostname=" + hostname + ", ownername=" + ownername + ", email=" + email + ", osname=" + osname + ", osuser=" + osuser + ", ospassword=" + ospassword + ", version=" + version + ", dbuser=" + dbuser + ", dbpassword=" + dbpassword + '}';
     }
     
     

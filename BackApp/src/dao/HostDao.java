@@ -32,7 +32,7 @@ public class HostDao extends Dao {
          List<Host> list = new ArrayList();
          while(rs.next()) { 
             // Retrieve by column name 
-            Host h = new Host(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9));
+            Host h = new Host(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));
             list.add(h);       
       
          } 
@@ -65,7 +65,7 @@ public class HostDao extends Dao {
          Host h = null;
          while(rs.next()) { 
             // Retrieve by column name 
-            h = new Host(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9));      
+            h = new Host(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));      
          } 
          
          // STEP 5: Clean-up environment 
@@ -90,7 +90,7 @@ public class HostDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "INSERT INTO Host " + "VALUES('"+h.getSid()+"','"+h.getHostname()+"','"+h.getOwnername()+"','"+h.getEmail()+"','"+h.getOsuser()+"','"+h.getOspassword()+"','"+h.getDbuser()+"','"+h.getDbpassword()+"','"+h.getVersion()+"')"; 
+         String sql = "INSERT INTO Host " + "VALUES('"+h.getSid()+"','"+h.getHostname()+"','"+h.getOwnername()+"','"+h.getEmail()+"','"+h.getOsname()+"','"+h.getOsuser()+"','"+h.getOspassword()+"','"+h.getDbuser()+"','"+h.getDbpassword()+"','"+h.getVersion()+"')"; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Inserted records into the table..."); 
@@ -112,7 +112,7 @@ public class HostDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "Update Host " + "Set hostname='"+h.getHostname()+"' and ownername='"+h.getOwnername()+"' and email='"+h.getEmail()+"' and osuser='"+h.getOsuser()+"' and ospassword='"+h.getOspassword()+"' and dbuser='"+h.getDbuser()+"' and dbpassword='"+h.getDbpassword()+"' and version='"+h.getVersion()+"' where sid='"+h.getSid()+"'"; 
+         String sql = "Update Host " + "Set hostname='"+h.getHostname()+"' and ownername='"+h.getOwnername()+"' and email='"+h.getEmail()+"' and osname='"+h.getOsname()+"' and osuser='"+h.getOsuser()+"' and ospassword='"+h.getOspassword()+"' and dbuser='"+h.getDbuser()+"' and dbpassword='"+h.getDbpassword()+"' and version='"+h.getVersion()+"' where sid='"+h.getSid()+"'"; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Updated records into the table..."); 

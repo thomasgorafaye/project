@@ -16,7 +16,7 @@ public class Plan {
     private int id;
     private boolean active;
     private String script;
-    private String objet;
+    private String object;
     private String name;
     private String type;
     private String method;
@@ -25,17 +25,19 @@ public class Plan {
     private String d_repertory;
     private String log;
     
+    private String host;
+    
     private List<Cron> crons;
     private List<Backup> backups;
 
     public Plan() {
     }
 
-    public Plan(int id, boolean active, String script, String objet, String name, String type, String method, String strategy, String s_repertory, String d_repertory, String log) {
+    public Plan(int id, boolean active, String script, String object, String name, String type, String method, String strategy, String s_repertory, String d_repertory, String log) {
         this.id = id;
         this.active = active;
         this.script = script;
-        this.objet = objet;
+        this.object = object;
         this.name = name;
         this.type = type;
         this.method = method;
@@ -69,12 +71,12 @@ public class Plan {
         this.script = script;
     }
 
-    public String getObjet() {
-        return objet;
+    public String getObject() {
+        return object;
     }
 
-    public void setObjet(String objet) {
-        this.objet = objet;
+    public void setObject(String object) {
+        this.object = object;
     }
 
     public String getName() {
@@ -135,6 +137,14 @@ public class Plan {
         this.log = log;
     }
 
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
     public List<Cron> getCrons() {
         return crons;
     }
@@ -153,7 +163,7 @@ public class Plan {
 
     @Override
     public String toString() {
-        return "Plan{" + "id=" + id + ", active=" + active + ", script=" + script + ", objet=" + objet + ", name=" + name + ", type=" + type + ", method=" + method + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + '}';
+        return "Plan{" + "id=" + id + ", active=" + active + ", script=" + script + ", object=" + object + ", name=" + name + ", type=" + type + ", method=" + method + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + '}';
     }
     
 }

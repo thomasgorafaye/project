@@ -18,7 +18,7 @@ public class Backup {
     private String time;
     private String type;
     private String method;
-    private String objet;
+    private String object;
     private String name;
     private String strategy;
     private String s_repertory;
@@ -26,17 +26,20 @@ public class Backup {
     private String log;
     private boolean success;
     private boolean planned;
+    
+    private String host;
+    private int plan;
 
     public Backup() {
     }
 
-    public Backup(long timestamp, Date date, String time, String type, String method, String objet, String name, String strategy, String s_repertory, String d_repertory, String log, boolean success, boolean planned) {
+    public Backup(long timestamp, Date date, String time, String type, String method, String object, String name, String strategy, String s_repertory, String d_repertory, String log, boolean success, boolean planned) {
         this.timestamp = timestamp;
         this.date = date;
         this.time = time;
         this.type = type;
         this.method = method;
-        this.objet = objet;
+        this.object = object;
         this.name = name;
         this.strategy = strategy;
         this.s_repertory = s_repertory;
@@ -86,12 +89,12 @@ public class Backup {
         this.method = method;
     }
 
-    public String getObjet() {
-        return objet;
+    public String getObject() {
+        return object;
     }
 
-    public void setObjet(String objet) {
-        this.objet = objet;
+    public void setObject(String object) {
+        this.object = object;
     }
 
     public String getName() {
@@ -150,9 +153,25 @@ public class Backup {
         this.planned = planned;
     }
 
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPlan() {
+        return plan;
+    }
+
+    public void setPlan(int plan) {
+        this.plan = plan;
+    }
+
     @Override
     public String toString() {
-        return "Backup{" + "timestamp=" + timestamp + ", date=" + date + ", time=" + time + ", type=" + type + ", method=" + method + ", objet=" + objet + ", name=" + name + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + ", success=" + success + ", planned=" + planned + '}';
+        return "Backup{" + "timestamp=" + timestamp + ", date=" + date + ", time=" + time + ", type=" + type + ", method=" + method + ", object=" + object + ", name=" + name + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + ", success=" + success + ", planned=" + planned + '}';
     }
     
     
