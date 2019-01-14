@@ -58,7 +58,7 @@ public class HostDao extends Dao {
            openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "SELECT * FROM Host where sid = "+sid; 
+         String sql = "SELECT * FROM Host where sid = '"+sid+"'"; 
          ResultSet rs = stmt.executeQuery(sql); 
          
          // STEP 4: Extract data from result set 

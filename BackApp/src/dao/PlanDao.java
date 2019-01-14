@@ -54,7 +54,7 @@ public class PlanDao extends Dao {
         return null;
     }
     
-    public Plan find(String id){
+    public Plan find(int id){
            openConnection();
       try {
          //STEP 3: Execute a query 
@@ -152,4 +152,35 @@ public class PlanDao extends Dao {
         return false;
     }
     
+     public Plan findByHost(String sid){
+           openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT * FROM Plan where host = '"+sid+"'"; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set 
+         Plan h = null;
+         while(rs.next()) { 
+            // Retrieve by column name 
+            h = new Plan(rs.getInt(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11));      
+         } 
+         
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+         System.out.println("Find one in database..."); 
+         
+         closeConnection();
+         return h;
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try  
+        return null;
+    }
 }

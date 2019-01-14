@@ -7,6 +7,8 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +18,7 @@ import javafx.scene.control.TextField;
 import model.Backup;
 import model.Host;
 import service.BackupService;
+import service.HostService;
 
 /**
  *
@@ -31,22 +34,42 @@ public class CreateBackupController implements Initializable {
     private TextField type,method,object,name,strategy,s_repertory,d_repertory,log;
     
     @FXML 
-    private ListView listView;
+    private ListView<Host> listView;
     
     private BackupService backupService;
+    private HostService hostService;
     
     private Host selected;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        backupService = new BackupService();
+       hostService = new HostService();
+       listView.getItems().addAll(hostService.findAll());
+       listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Host>() {
+           @Override
+           public void changed(ObservableValue<? extends Host> observable, Host oldValue, Host newValue) {
+               selected=newValue;
+               p_sid.setText(selected.getSid());
+               p_hostname.setText(selected.getHostname());
+               p_ownername.setText(selected.getOwnername());
+               p_email.setText(selected.getEmail());
+               p_osname.setText(selected.getOsname());
+               p_osuser.setText(selected.getOsuser());
+               p_ospassword.setText(selected.getOspassword());
+               p_dbuser.setText(selected.getDbuser());
+               p_dbpassword.setText(selected.getDbpassword());
+               p_version.setText(selected.getVersion());
+               System.out.println("Selected item: " + newValue);
+           }
+       });
     }
 
     @FXML
     private void enregistrer(ActionEvent event) {
         System.out.println("You clicked me!");
         Backup b = new Backup();
-        backupService.coldBackupXcopy(selected, b);
+        backupService.create(selected, b);
         
     }
     

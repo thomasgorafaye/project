@@ -54,7 +54,7 @@ public class BackupDao extends Dao {
         return null;
     }
     
-    public Backup find(String timestamp){
+    public Backup find(long timestamp){
            openConnection();
       try {
          //STEP 3: Execute a query 
@@ -150,6 +150,70 @@ public class BackupDao extends Dao {
          closeConnection();
       } //end try
         return false;
+    }
+     
+     public Backup findByHost(String sid){
+           openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT * FROM Backup where host = '"+sid+"'"; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set 
+         Backup h = null;
+         while(rs.next()) { 
+            // Retrieve by column name 
+            h = new Backup(rs.getInt(1),rs.getDate(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getBoolean(12),rs.getBoolean(13));      
+         } 
+         
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+         System.out.println("Find one in database..."); 
+   
+         closeConnection();
+         return h;
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try  
+        return null;
+    }
+     
+    public Backup findByPlan(int id){
+           openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT * FROM Backup where plan = "+id; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set 
+         Backup h = null;
+         while(rs.next()) { 
+            // Retrieve by column name 
+            h = new Backup(rs.getInt(1),rs.getDate(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getBoolean(12),rs.getBoolean(13));      
+         } 
+         
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+         System.out.println("Find one in database..."); 
+   
+         closeConnection();
+         return h;
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try  
+        return null;
     }
     
 }

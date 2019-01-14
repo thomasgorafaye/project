@@ -133,7 +133,7 @@
                   <Label fx:id="p_dbpassword" layoutX="111.0" layoutY="355.0" text="Label" />
                   <Label fx:id="p_version" layoutX="111.0" layoutY="390.0" text="Label" />
                   <Label fx:id="l_osname" layoutY="196.0" text="Syst. d'exploitation" />
-                  <Label fx:id="p_name" layoutX="111.0" layoutY="196.0" text="Label" />
+                  <Label fx:id="p_osname" layoutX="111.0" layoutY="196.0" text="Label" />
           </children>
         </AnchorPane>
       </items>

@@ -11,25 +11,65 @@ package model;
  */
 public class Cron {
     private int id;
-    private String year_start;
-    private String year_end;
-    private String year_every;
-    private String month_start;
-    private String month_end;
-    private String month_every;
-    private String day_start;
-    private String day_end;
-    private String day_every;
-    private String weekday_start;
-    private String weekday_end;
-    private String weekday_every;
-    private String hour_start;
-    private String hour_end;
-    private String hour_every;
-    private String minute_start;
-    private String minute_end;
-    private String minute_every;
-    private String second_start;
-    private String second_end;
-    private String second_every;
+    private String expression;
+    private boolean active;
+    
+    private int plan;
+    
+    private Elements elements;
+
+    public Cron() {
+    }
+
+    public Cron(int id, String expression, boolean active) {
+        this.id = id;
+        this.expression = expression;
+        this.active = active;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getPlan() {
+        return plan;
+    }
+
+    public void setPlan(int plan) {
+        this.plan = plan;
+    }
+
+    public Elements getElements() {
+        return elements;
+    }
+
+    public void setElements(Elements elements) {
+        this.elements = elements;
+    }
+
+    @Override
+    public String toString() {
+        return "Cron{" + "id=" + id + ", expression=" + expression + ", active=" + active + '}';
+    }
+    
 }

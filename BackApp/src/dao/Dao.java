@@ -54,7 +54,8 @@ public class Dao {
             if(conn!=null) conn.close(); 
          } catch(SQLException se){ 
             se.printStackTrace(); 
-         } //end finally try 
+         } //end finally try
+         System.out.println("Connection closed...");
    }
   
    public void init() { 
@@ -62,7 +63,7 @@ public class Dao {
       try {
          //STEP 3: Execute a query 
          System.out.println("Creating tables in given database..."); 
-         String sql =  "CREATE TABLE HOST " + 
+         String sql =  "CREATE TABLE IF NOT EXISTS HOST " + 
             "(sid VARCHAR(255) not NULL, " + 
             " hostname VARCHAR(255), " +  
             " ownername VARCHAR(255), " +   
@@ -76,7 +77,7 @@ public class Dao {
             " PRIMARY KEY ( sid ))";  
          stmt.executeUpdate(sql);
          stmt = conn.createStatement(); 
-         sql =  "CREATE TABLE PLAN " + 
+         sql =  "CREATE TABLE IF NOT EXISTS PLAN " + 
             "(id INTEGER not NULL, " + 
             " active BOOLEAN, " +  
             " script VARCHAR(255), " +   
@@ -92,7 +93,7 @@ public class Dao {
             " PRIMARY KEY ( id ))";  
          stmt.executeUpdate(sql);
          stmt = conn.createStatement(); 
-         sql =  "CREATE TABLE BACKUP " + 
+         sql =  "CREATE TABLE IF NOT EXISTS BACKUP " + 
             "(timestamp INTEGER not NULL, " + 
             " date DATE, " +  
             " time VARCHAR(255), " +
@@ -108,7 +109,14 @@ public class Dao {
             " planned BOOLEAN, " +
             " host VARCHAR(255), " +
             " plan INTEGER, " +
-            " PRIMARY KEY ( timestamp ))";  
+            " PRIMARY KEY ( timestamp ))";
+         stmt = conn.createStatement(); 
+         sql =  "CREATE TABLE IF NOT EXISTS CRON " + 
+            "(id INTEGER not NULL, " + 
+            " expression VARCHAR(255), " +  
+            " active BOOLEAN, " +
+            " plan INTEGER, " +
+            " PRIMARY KEY ( id ))";
          stmt.executeUpdate(sql);
          System.out.println("Created tables in given database..."); 
          
