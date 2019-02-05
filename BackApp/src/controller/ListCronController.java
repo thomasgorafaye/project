@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,21 +13,37 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import model.Cron;
 
 /**
  *
  * @author thomas
  */
 public class ListCronController implements Initializable {
+    
+        @FXML
+        private VBox root;
+        
+        @FXML
+        private TableView<Cron> tableView;
     
         @FXML
         private AnchorPane p_seconds,p_minutes,p_hours,p_day,p_month,p_year;
@@ -98,6 +115,16 @@ public class ListCronController implements Initializable {
     
     private final HashMap<String,String> monthMap;
     private final HashMap<String,String> dayMap;
+    private final HashMap<String,String> dayMapInt;
+    
+    @FXML 
+    private Label entete;
+    
+    private ObservableList<Cron> CronList = FXCollections.observableArrayList();
+    
+    //private CronService cronService;
+    
+    private Cron selected;
 
     public ListCronController() {
         this.listAnnee = new ArrayList();
@@ -126,6 +153,15 @@ public class ListCronController implements Initializable {
         dayMap.put("Vendredi", "FRI");
         dayMap.put("Samedi", "SAT");
         dayMap.put("Dimanche", "SUN");
+        
+        dayMapInt = new HashMap();
+        dayMapInt.put("Lundi", "2");
+        dayMapInt.put("Mardi", "3");
+        dayMapInt.put("Mercredi", "4");
+        dayMapInt.put("Jeudi", "5");
+        dayMapInt.put("Vendredi", "6");
+        dayMapInt.put("Samedi", "7");
+        dayMapInt.put("Dimanche", "1");
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -159,6 +195,18 @@ public class ListCronController implements Initializable {
         year_combo_2.getItems().addAll(listAnnee);
         year_combo_3.getItems().addAll(listAnnee);
         year_combo_4.getItems().addAll(listAnnee);
+        
+        //cronService = new CronService();
+        //CronList.addAll(cronService.findAll());
+        tableView.getItems().addAll(CronList);
+        tableView.getItems().add(new Cron(1,"Rose",true));
+        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Cron>() {
+            @Override
+            public void changed(ObservableValue<? extends Cron> observable, Cron oldValue, Cron newValue) {
+                selected=newValue;
+                System.out.println("Selected item: " + newValue);
+            }
+        });
     }    
     
     @FXML
@@ -172,15 +220,16 @@ public class ListCronController implements Initializable {
             l_seconds = ((String)seconds_combo_2.getValue())+"/"+((String)seconds_combo_1.getValue())+" ";
         }
         else if(g_seconds_3.isSelected()){
-            for(Node node : p_seconds.getChildren()){
-                String tmp="";
+            String tmp="";
+            for(Node node : p_seconds.getChildren()){             
                 if(node instanceof CheckBox){
                     CheckBox box = (CheckBox) node;
                     if(box.isSelected())
                         tmp += Integer.parseUnsignedInt(box.getText())+",";
                 }
-                l_seconds = tmp.substring(0, tmp.length()-1)+" ";
             }
+            if(tmp.length()>0)
+                l_seconds = tmp.substring(0, tmp.length()-1)+" ";
         }
         else if(g_seconds_4.isSelected()){
             l_seconds = ((String)seconds_combo_3.getValue())+"-"+((String)seconds_combo_4.getValue())+" ";
@@ -195,15 +244,16 @@ public class ListCronController implements Initializable {
             l_minutes = ((String)minutes_combo_2.getValue())+"/"+((String)minutes_combo_1.getValue())+" ";
         }
         else if(g_minutes_3.isSelected()){
-            for(Node node : p_minutes.getChildren()){
-                String tmp="";
+            String tmp="";
+            for(Node node : p_minutes.getChildren()){             
                 if(node instanceof CheckBox){
                     CheckBox box = (CheckBox) node;
                     if(box.isSelected())
                         tmp += Integer.parseUnsignedInt(box.getText())+",";
                 }
-                l_minutes = tmp.substring(0, tmp.length()-1)+" ";
             }
+            if(tmp.length()>0)
+                l_minutes = tmp.substring(0, tmp.length()-1)+" ";
         }
         else if(g_minutes_4.isSelected()){
             l_minutes = ((String)minutes_combo_3.getValue())+"-"+((String)minutes_combo_4.getValue())+" ";
@@ -218,15 +268,16 @@ public class ListCronController implements Initializable {
             l_hours = ((String)hours_combo_2.getValue())+"/"+((String)hours_combo_1.getValue())+" ";
         }
         else if(g_hours_3.isSelected()){
-            for(Node node : p_hours.getChildren()){
-                String tmp="";
+            String tmp="";
+            for(Node node : p_hours.getChildren()){             
                 if(node instanceof CheckBox){
                     CheckBox box = (CheckBox) node;
                     if(box.isSelected())
                         tmp += Integer.parseUnsignedInt(box.getText())+",";
                 }
-                l_hours = tmp.substring(0, tmp.length()-1)+" ";
             }
+            if(tmp.length()>0)
+                l_hours = tmp.substring(0, tmp.length()-1)+" ";
         }
         else if(g_hours_4.isSelected()){
             l_hours = ((String)hours_combo_3.getValue())+"/"+((String)hours_combo_4.getValue())+" ";
@@ -245,44 +296,54 @@ public class ListCronController implements Initializable {
             l_day = ((String)day_combo_4.getValue())+"/"+((String)day_combo_3.getValue())+" ";
         }
         else if(g_day_4.isSelected()){
-            for(Node node : p_hours.getChildren()){
-                String tmp="";
+            String tmp="";
+            for(Node node : p_day.getChildren()){            
                 if(node instanceof CheckBox){
                     CheckBox box = (CheckBox) node;
                     if((box.isSelected())&&(box.getText().length()>3))
                         tmp += dayMap.get(box.getText())+",";
                 }
-                l_day = tmp.substring(0, tmp.length()-1)+" ";
             }
+            if(tmp.length()>0)
+                l_wd = tmp.substring(0, tmp.length()-1)+" ";
+            l_day = "? ";
         }
         else if(g_day_5.isSelected()){
-            for(Node node : p_hours.getChildren()){
-                String tmp="";
+            String tmp="";
+            for(Node node : p_day.getChildren()){ 
                 if(node instanceof CheckBox){
                     CheckBox box = (CheckBox) node;
-                    if((box.isSelected())&&(box.getText().length()>3))
+                    if((box.isSelected())&&(box.getText().length()<3))
                         tmp += Integer.parseUnsignedInt(box.getText())+",";
                 }
-                l_day = tmp.substring(0, tmp.length()-1)+" ";
             }
+            if(tmp.length()>0)
+                l_day = tmp.substring(0, tmp.length()-1)+" ";
+            l_wd = "? ";
         }
         else if(g_day_6.isSelected()){
-            
+            l_day = "L ";
+            l_wd = "? ";
         }
         else if(g_day_7.isSelected()){
-            
+            l_day = "LW";
+            l_wd = "? ";
         }
         else if(g_day_8.isSelected()){
-            
+            l_day = dayMapInt.get((String)day_combo_5.getValue())+"L ";
+            l_wd = "? ";
         }
         else if(g_day_9.isSelected()){
-            
+            l_day = "L-"+Integer.parseInt((String)day_combo_6.getValue())+" ";
+            l_wd = "? ";
         }
         else if(g_day_10.isSelected()){
-            
+            l_day = Integer.parseInt((String)day_combo_7.getValue())+"W ";
+            l_wd = "? ";
         }
         else if(g_day_11.isSelected()){
-            
+            l_wd = dayMapInt.get((String)day_combo_9.getValue())+"#"+((String)day_combo_8.getValue()).charAt(0)+" ";
+            l_day = "? ";
         }
         else {
             l_day = "? ";
@@ -295,15 +356,16 @@ public class ListCronController implements Initializable {
             l_month = monthMap.get((String)month_combo_2.getValue())+"/"+((String)month_combo_1.getValue())+" ";
         }
         else if(g_month_3.isSelected()){
-            for(Node node : p_month.getChildren()){
-                String tmp="";
+            String tmp="";
+            for(Node node : p_month.getChildren()){      
                 if(node instanceof CheckBox){
                     CheckBox box = (CheckBox) node;
                     if(box.isSelected())
-                        tmp += Integer.parseUnsignedInt(box.getText())+",";
+                        tmp += monthMap.get(box.getText())+",";
                 }
-                l_month = tmp.substring(0, tmp.length()-1)+" ";
             }
+            if(tmp.length()>0)
+                l_month = tmp.substring(0, tmp.length()-1)+" ";
         }
         else if(g_month_4.isSelected()){
             l_month = monthMap.get((String)month_combo_3.getValue())+"/"+monthMap.get((String)month_combo_4.getValue())+" ";
@@ -318,15 +380,16 @@ public class ListCronController implements Initializable {
             l_year = ((String)year_combo_2.getValue())+"/"+((String)year_combo_1.getValue())+" ";
         }
         else if(g_year_3.isSelected()){
-            for(Node node : p_year.getChildren()){
-                String tmp="";
+            String tmp="";
+            for(Node node : p_year.getChildren()){     
                 if(node instanceof CheckBox){
                     CheckBox box = (CheckBox) node;
                     if(box.isSelected())
                         tmp += Integer.parseUnsignedInt(box.getText())+",";
                 }
-                l_year = tmp.substring(0, tmp.length()-1)+" ";
             }
+            if(tmp.length()>0)
+                l_year = tmp.substring(0, tmp.length()-1)+" ";
         }
         else if(g_year_4.isSelected()){
             l_year = ((String)year_combo_3.getValue())+"/"+((String)year_combo_4.getValue())+" ";
@@ -337,5 +400,36 @@ public class ListCronController implements Initializable {
         expression.setText(l_seconds+l_minutes+l_hours+l_day+l_month+l_wd+l_year);
     }
 	
-	
+    @FXML
+    private void createHost(ActionEvent event) {
+            try {
+                root = (VBox) FXMLLoader.load(getClass().getResource("/view/Createbackup.fxml"));
+            } catch (IOException ex) {
+                Logger.getLogger(ListCronController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    @FXML
+    private void supprimer(ActionEvent event) {
+        System.out.println("You clicked me!");
+        if(selected != null){
+            //hostService.delete(selected);
+            tableView.getItems().remove(selected);
+        }  
+    }
+    
+    @FXML
+    private void modifier(ActionEvent event) {
+        System.out.println("You clicked me!");
+        if(selected != null){
+            //hostService.delete(selected);
+            entete.setText("Modification SID:"+selected.getId());
+        }  
+    }
+    
+    @FXML
+    private void ajouter(ActionEvent event) {
+        System.out.println("You clicked me!");
+        entete.setText("Enregistrement");
+    }
 }

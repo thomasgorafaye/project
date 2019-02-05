@@ -5,7 +5,15 @@
  */
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -13,19 +21,19 @@ import java.util.Date;
  */
 public class Backup {
     
-    private long timestamp;
-    private Date date;
-    private String time;
-    private String type;
-    private String method;
-    private String object;
-    private String name;
-    private String strategy;
-    private String s_repertory;
-    private String d_repertory;
-    private String log;
-    private boolean success;
-    private boolean planned;
+    private LongProperty timestamp;
+    private ObjectProperty<Date> date;
+    private SimpleStringProperty time;
+    private SimpleStringProperty type;
+    private SimpleStringProperty method;
+    private SimpleStringProperty object;
+    private SimpleStringProperty name;
+    private SimpleStringProperty strategy;
+    private SimpleStringProperty s_repertory;
+    private SimpleStringProperty d_repertory;
+    private SimpleStringProperty log;
+    private BooleanProperty success;
+    private BooleanProperty planned;
     
     private String host;
     private int plan;
@@ -34,123 +42,123 @@ public class Backup {
     }
 
     public Backup(long timestamp, Date date, String time, String type, String method, String object, String name, String strategy, String s_repertory, String d_repertory, String log, boolean success, boolean planned) {
-        this.timestamp = timestamp;
-        this.date = date;
-        this.time = time;
-        this.type = type;
-        this.method = method;
-        this.object = object;
-        this.name = name;
-        this.strategy = strategy;
-        this.s_repertory = s_repertory;
-        this.d_repertory = d_repertory;
-        this.log = log;
-        this.success = success;
-        this.planned = planned;
+        this.timestamp = new SimpleLongProperty(timestamp);
+        this.date = new SimpleObjectProperty(date);
+        this.time = new SimpleStringProperty(time);
+        this.type = new SimpleStringProperty(type);
+        this.method = new SimpleStringProperty(method);
+        this.object = new SimpleStringProperty(object);
+        this.name = new SimpleStringProperty(name);
+        this.strategy = new SimpleStringProperty(strategy);
+        this.s_repertory = new SimpleStringProperty(s_repertory);
+        this.d_repertory = new SimpleStringProperty(d_repertory);
+        this.log = new SimpleStringProperty(log);
+        this.success = new SimpleBooleanProperty(success);
+        this.planned = new SimpleBooleanProperty(planned);
     }
 
     public long getTimestamp() {
-        return timestamp;
+        return timestamp.get();
     }
 
     public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+        this.timestamp.set(timestamp);
     }
 
     public Date getDate() {
-        return date;
+        return date.get();
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date.set(date);
     }
 
     public String getTime() {
-        return time;
+        return time.get();
     }
 
     public void setTime(String time) {
-        this.time = time;
+        this.time.set(time);
     }
 
     public String getType() {
-        return type;
+        return type.get();
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type.set(type);
     }
 
     public String getMethod() {
-        return method;
+        return method.get();
     }
 
     public void setMethod(String method) {
-        this.method = method;
+        this.method.set(method);
     }
 
     public String getObject() {
-        return object;
+        return object.get();
     }
 
     public void setObject(String object) {
-        this.object = object;
+        this.object.set(object);
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
     public String getStrategy() {
-        return strategy;
+        return strategy.get();
     }
 
     public void setStrategy(String strategy) {
-        this.strategy = strategy;
+        this.strategy.set(strategy);
     }
 
     public String getS_repertory() {
-        return s_repertory;
+        return s_repertory.get();
     }
 
     public void setS_repertory(String s_repertory) {
-        this.s_repertory = s_repertory;
+        this.s_repertory.set(s_repertory);
     }
 
     public String getD_repertory() {
-        return d_repertory;
+        return d_repertory.get();
     }
 
     public void setD_repertory(String d_repertory) {
-        this.d_repertory = d_repertory;
+        this.d_repertory.set(d_repertory);
     }
 
     public String getLog() {
-        return log;
+        return log.get();
     }
 
     public void setLog(String log) {
-        this.log = log;
+        this.log.set(log);
     }
 
     public boolean isSuccess() {
-        return success;
+        return success.get();
     }
 
     public void setSuccess(boolean success) {
-        this.success = success;
+        this.success.set(success);
     }
 
     public boolean isPlanned() {
-        return planned;
+        return planned.get();
     }
 
     public void setPlanned(boolean planned) {
-        this.planned = planned;
+        this.planned.set(planned);
     }
 
     public String getHost() {

@@ -5,50 +5,57 @@
  */
 package model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author thomas
  */
 public class Cron {
-    private int id;
-    private String expression;
-    private boolean active;
+    private IntegerProperty id;
+    private SimpleStringProperty expression;
+    private BooleanProperty active;
     
     private int plan;
     
     private Elements elements;
 
     public Cron() {
+        
     }
 
     public Cron(int id, String expression, boolean active) {
-        this.id = id;
-        this.expression = expression;
-        this.active = active;
+        this.id = new SimpleIntegerProperty(id);
+        this.expression = new SimpleStringProperty(expression);
+        this.active = new SimpleBooleanProperty(active);
     }
 
     public int getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getExpression() {
-        return expression;
+        return expression.get();
     }
 
     public void setExpression(String expression) {
-        this.expression = expression;
+        this.expression.set(expression);
     }
 
     public boolean isActive() {
-        return active;
+        return active.get();
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+        this.active.set(active);
     }
 
     public int getPlan() {

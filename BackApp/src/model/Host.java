@@ -6,6 +6,8 @@
 package model;
 
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -13,114 +15,121 @@ import java.util.List;
  */
 public class Host {
     
-    private String sid;
-    private String hostname;
-    private String ownername;
-    private String email;
-    private String osname;
-    private String osuser;
-    private String ospassword;
-    private String version;
-    private String dbuser;
-    private String dbpassword;
+    private final StringProperty sid;
+    private final StringProperty hostname;
+    private final StringProperty ownername;
+    private final StringProperty email;
+    private final StringProperty osname;
+    private final StringProperty osuser;
+    private final StringProperty ospassword;
+    private final StringProperty version;
+    private final StringProperty dbuser;
+    private final StringProperty dbpassword;
     
     private List<Plan> plans;
     private List<Backup> backups;
 
     public Host() {
+        this("", "", "","", "", "","", "", "","");
     }
 
     public Host(String sid, String hostname, String ownername, String email, String osname, String osuser, String ospassword, String version, String dbuser, String dbpassword) {
-        this.sid = sid;
-        this.hostname = hostname;
-        this.ownername = ownername;
-        this.email = email;
-        this.osname = osname;
-        this.osuser = osuser;
-        this.ospassword = ospassword;
-        this.version = version;
-        this.dbuser = dbuser;
-        this.dbpassword = dbpassword;
+        this.sid = new SimpleStringProperty(sid);
+        this.hostname = new SimpleStringProperty(hostname);
+        this.ownername = new SimpleStringProperty(ownername);
+        this.email = new SimpleStringProperty(email);
+        this.osname = new SimpleStringProperty(osname);
+        this.osuser = new SimpleStringProperty(osuser);
+        this.ospassword = new SimpleStringProperty(ospassword);
+        this.version = new SimpleStringProperty(version);
+        this.dbuser = new SimpleStringProperty(dbuser);
+        this.dbpassword = new SimpleStringProperty(dbpassword);
     }
-
+    
+    /**
+    * @return 
+    */
     public String getSid() {
-        return sid;
+        return sid.get();
     }
-
+    
+    /**
+    * @param sid
+    */
     public void setSid(String sid) {
-        this.sid = sid;
+        this.sid.set(sid);
     }
 
     public String getHostname() {
-        return hostname;
+        return hostname.get();
     }
 
     public void setHostname(String hostname) {
-        this.hostname = hostname;
+        this.hostname.set(hostname);
     }
 
     public String getOwnername() {
-        return ownername;
+        return ownername.get();
     }
 
     public void setOwnername(String ownername) {
-        this.ownername = ownername;
+        this.ownername.set(ownername);
     }
 
     public String getEmail() {
-        return email;
+        return email.get();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
     }
 
     public String getOsname() {
-        return osname;
+        return osname.get();
     }
 
     public void setOsname(String osname) {
-        this.osname = osname;
+        this.osname.set(osname);
     }
 
     public String getOsuser() {
-        return osuser;
+        return osuser.get();
     }
 
     public void setOsuser(String osuser) {
-        this.osuser = osuser;
+        this.osuser.set(osuser);
     }
 
     public String getOspassword() {
-        return ospassword;
+        return ospassword.get();
     }
 
     public void setOspassword(String ospassword) {
-        this.ospassword = ospassword;
+        this.ospassword.set(ospassword);
     }
 
     public String getVersion() {
-        return version;
+        return version.get();
     }
 
     public void setVersion(String version) {
-        this.version = version;
+        this.version.set(version);
     }
 
     public String getDbuser() {
-        return dbuser;
+        return dbuser.get();
     }
 
     public void setDbuser(String dbuser) {
-        this.dbuser = dbuser;
+        this.dbuser.set(dbuser);
     }
 
     public String getDbpassword() {
-        return dbpassword;
+        return dbpassword.get();
     }
 
     public void setDbpassword(String dbpassword) {
-        this.dbpassword = dbpassword;
+        this.dbpassword.set(dbpassword);
     }
 
     public List<Plan> getPlans() {

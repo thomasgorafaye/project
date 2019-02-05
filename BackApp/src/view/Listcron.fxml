@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -24,14 +25,15 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.cell.*?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListCronController">
+<VBox fx:id="root" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListCronController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" onAction="#createHost" text="New" />
             <MenuItem mnemonicParsing="false" text="Open…" />
             <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -81,19 +83,31 @@
               </textFill>
             </Label>
                         <Line endX="100.0" layoutX="107.0" layoutY="41.0" startX="-100.0" />
-                        <TableView layoutY="42.0" prefHeight="504.0" prefWidth="${anchor1.width*0.9}">
+                        <TableView fx:id="tableView" layoutY="42.0" prefHeight="504.0" prefWidth="${anchor1.width*0.9}">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn prefWidth="75.0" text="ID">
+							<cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+							</TableColumn>
+                            <TableColumn prefWidth="75.0" text="Expression">
+							<cellValueFactory><PropertyValueFactory property="expression" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Active">
+							<cellValueFactory><PropertyValueFactory property="active" /></cellValueFactory>
+							</TableColumn>
                           </columns>
                         </TableView>
+						<Button layoutX="163.0" layoutY="565.0" mnemonicParsing="false" onAction="#ajouter" text="Ajouter" />
+                        <Button layoutX="218.0" layoutY="565.0" mnemonicParsing="false" onAction="#modifier" text="Modifier" />
+                        <Button layoutX="279.0" layoutY="565.0" mnemonicParsing="false" onAction="#supprimer" text="Supprimer" />
+                        <Button layoutX="351.0" layoutY="565.0" mnemonicParsing="false" text="Rechercher" />
+                        <TextField layoutX="427.0" layoutY="565.0" />
           </children>
         </AnchorPane>
 		</content>
         </ScrollPane>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Enregistrement" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+            <Label fx:id="entete" alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Enregistrement" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                   <Line endX="100.0" layoutX="101.0" layoutY="41.0" startX="-100.0" />
                   <TabPane layoutX="1.0" layoutY="41.0" prefHeight="467.0" prefWidth="486.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -108,12 +122,6 @@
                                     </RadioButton>
                                     <RadioButton fx:id="g_seconds_2" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Chaque" toggleGroup="$g_seconds" />
                                     <RadioButton fx:id="g_seconds_3" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Seconde spécifique (Choisir un ou plusieurs)" toggleGroup="$g_seconds" />
-                                    <CheckBox fx:id="s_00" layoutX="52.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="00" />
-                                    <CheckBox fx:id="s_10" layoutX="52.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
-                                    <CheckBox fx:id="s_20" layoutX="52.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
-                                    <CheckBox fx:id="s_30" layoutX="52.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="30" />
-                                    <CheckBox layoutX="52.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="40" />
-                                    <CheckBox layoutX="52.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="50" />
                                     <RadioButton fx:id="g_seconds_4" layoutX="18.0" layoutY="275.0" mnemonicParsing="false" text="Chaque seconde entre les secondes" toggleGroup="$g_seconds" />
                                     <ComboBox fx:id="seconds_combo_1" layoutX="76.0" layoutY="43.0" prefHeight="25.0" prefWidth="56.0" />
                                     <Label layoutX="131.0" layoutY="47.0" text="seconde(s) à partir de la seconde" />
@@ -121,59 +129,65 @@
                                     <ComboBox fx:id="seconds_combo_3" layoutX="228.0" layoutY="271.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="278.0" layoutY="275.0" text="et" />
                                     <ComboBox fx:id="seconds_combo_4" layoutX="291.0" layoutY="271.0" prefHeight="25.0" prefWidth="41.0" />
+									<CheckBox fx:id="s_00" layoutX="52.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="00" />
                                     <CheckBox fx:id="s_01" layoutX="97.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="01" />
+									<CheckBox fx:id="s_02" layoutX="137.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="02" />
+									<CheckBox fx:id="s_03" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
+									<CheckBox fx:id="s_04" layoutX="217.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
+									<CheckBox fx:id="s_05" layoutX="257.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
+									<CheckBox fx:id="s_06" layoutX="297.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
+									<CheckBox fx:id="s_07" layoutX="337.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
+									<CheckBox fx:id="s_08" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
+									<CheckBox fx:id="s_09" layoutX="417.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
+									<CheckBox fx:id="s_10" layoutX="52.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
                                     <CheckBox fx:id="s_11" layoutX="97.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="11" />
+									<CheckBox fx:id="s_12" layoutX="137.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
+									<CheckBox fx:id="s_13" layoutX="177.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
+									<CheckBox fx:id="s_14" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
+									<CheckBox fx:id="s_15" layoutX="257.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
+									<CheckBox fx:id="s_16" layoutX="297.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
+									<CheckBox fx:id="s_17" layoutX="337.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
+									<CheckBox fx:id="s_18" layoutX="377.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
+									<CheckBox fx:id="s_19" layoutX="417.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
+									<CheckBox fx:id="s_20" layoutX="52.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
                                     <CheckBox fx:id="s_21" layoutX="97.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="21" />
+									<CheckBox fx:id="s_22" layoutX="137.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="22" />
+									<CheckBox fx:id="s_23" layoutX="177.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="23" />
+									<CheckBox fx:id="s_24" layoutX="217.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="24" />
+									<CheckBox fx:id="s_25" layoutX="257.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="25" />
+									<CheckBox fx:id="s_26" layoutX="297.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="26" />
+									<CheckBox fx:id="s_27" layoutX="337.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="27" />
+									<CheckBox fx:id="s_28" layoutX="377.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="28" />
+									<CheckBox fx:id="s_29" layoutX="417.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="29" />
+									<CheckBox fx:id="s_30" layoutX="52.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="30" />
                                     <CheckBox fx:id="s_31" layoutX="97.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="31" />
+									<CheckBox fx:id="s_32" layoutX="137.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="32" />
+									<CheckBox fx:id="s_33" layoutX="177.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="33" />
+									<CheckBox fx:id="s_34" layoutX="217.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="34" />
+									<CheckBox fx:id="s_35" layoutX="257.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="35" />
+									<CheckBox fx:id="s_36" layoutX="297.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="36" />
+									<CheckBox fx:id="s_37" layoutX="337.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="37" />
+									<CheckBox fx:id="s_38" layoutX="377.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="38" />
+									<CheckBox fx:id="s_39" layoutX="417.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="39" />
+									<CheckBox fx:id="s_40" layoutX="52.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="40" />
                                     <CheckBox fx:id="s_41" layoutX="97.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="41" />
+									<CheckBox fx:id="s_42" layoutX="137.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="42" />
+									<CheckBox fx:id="s_43" layoutX="177.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="43" />
+									<CheckBox fx:id="s_44" layoutX="217.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="44" />
+									<CheckBox fx:id="s_45" layoutX="257.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="45" />
+									<CheckBox fx:id="s_46" layoutX="297.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="46" />
+									<CheckBox fx:id="s_47" layoutX="338.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="47" />
+									<CheckBox fx:id="s_48" layoutX="377.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="48" />
+									<CheckBox fx:id="s_49" layoutX="417.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="49" />
+									<CheckBox fx:id="s_50" layoutX="52.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="50" />
                                     <CheckBox fx:id="s_51" layoutX="97.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="51" />
-                                    <CheckBox fx:id="s_02" layoutX="137.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="02" />
-                                    <CheckBox fx:id="s_12" layoutX="137.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
-                                    <CheckBox fx:id="s_22" layoutX="137.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="22" />
-                                    <CheckBox fx:id="s_32" layoutX="137.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="32" />
-                                    <CheckBox fx:id="s_42" layoutX="137.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="42" />
                                     <CheckBox fx:id="s_52" layoutX="137.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="52" />
-                                    <CheckBox fx:id="s_03" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
-                                    <CheckBox fx:id="s_13" layoutX="177.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
-                                    <CheckBox fx:id="s_23" layoutX="177.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="23" />
-                                    <CheckBox fx:id="s_33" layoutX="177.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="33" />
-                                    <CheckBox fx:id="s_43" layoutX="177.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="43" />
                                     <CheckBox fx:id="s_53" layoutX="177.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="53" />
-                                    <CheckBox fx:id="s_04" layoutX="217.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
-                                    <CheckBox fx:id="s_14" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
-                                    <CheckBox fx:id="s_24" layoutX="217.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="24" />
-                                    <CheckBox fx:id="s_34" layoutX="217.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="34" />
-                                    <CheckBox fx:id="s_44" layoutX="217.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="44" />
                                     <CheckBox fx:id="s_54" layoutX="217.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="54" />
-                                    <CheckBox fx:id="s_05" layoutX="257.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
-                                    <CheckBox fx:id="s_15" layoutX="257.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
-                                    <CheckBox fx:id="s_25" layoutX="257.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="25" />
-                                    <CheckBox fx:id="s_35" layoutX="257.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="35" />
-                                    <CheckBox fx:id="s_45" layoutX="257.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="45" />
-                                    <CheckBox fx:id="s_55" layoutX="257.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="55" />
-                                    <CheckBox fx:id="s_06" layoutX="297.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
-                                    <CheckBox fx:id="s_16" layoutX="297.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
-                                    <CheckBox fx:id="s_26" layoutX="297.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="26" />
-                                    <CheckBox fx:id="s_36" layoutX="297.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="36" />
-                                    <CheckBox fx:id="s_46" layoutX="297.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="46" />
+									<CheckBox fx:id="s_55" layoutX="257.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="55" />
                                     <CheckBox fx:id="s_56" layoutX="297.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="56" />
-                                    <CheckBox fx:id="s_07" layoutX="337.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
-                                    <CheckBox fx:id="s_17" layoutX="337.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
-                                    <CheckBox fx:id="s_27" layoutX="337.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="27" />
-                                    <CheckBox fx:id="s_37" layoutX="337.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="37" />
-                                    <CheckBox fx:id="s_47" layoutX="338.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="47" />
                                     <CheckBox fx:id="s_57" layoutX="338.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="57" />
-                                    <CheckBox fx:id="s_08" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
-                                    <CheckBox fx:id="s_18" layoutX="377.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
-                                    <CheckBox fx:id="s_28" layoutX="377.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="28" />
-                                    <CheckBox fx:id="s_38" layoutX="377.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="38" />
-                                    <CheckBox fx:id="s_48" layoutX="377.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="48" />
-                                    <CheckBox fx:id="s_58" layoutX="377.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="58" />
-                                    <CheckBox fx:id="s_09" layoutX="417.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
-                                    <CheckBox fx:id="s_19" layoutX="417.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
-                                    <CheckBox fx:id="s_29" layoutX="417.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="29" />
-                                    <CheckBox fx:id="s_39" layoutX="417.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="39" />
-                                    <CheckBox fx:id="s_49" layoutX="417.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="49" />
+									<CheckBox fx:id="s_58" layoutX="377.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="58" />
                                     <CheckBox fx:id="s_59" layoutX="417.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="59" />
                                  </children>
                               </AnchorPane>
@@ -190,12 +204,6 @@
                                     </RadioButton>
                                     <RadioButton fx:id="g_minutes_2" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Chaque" toggleGroup="$g_minutes" />
                                     <RadioButton fx:id="g_minutes_3" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Minute spécifique (Choisir un ou plusieurs)" toggleGroup="$g_minutes" />
-                                    <CheckBox fx:id="m_00" layoutX="52.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="00" />
-                                    <CheckBox fx:id="m_10" layoutX="52.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
-                                    <CheckBox fx:id="m_20" layoutX="52.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
-                                    <CheckBox fx:id="m_30" layoutX="52.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="30" />
-                                    <CheckBox fx:id="m_40" layoutX="52.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="40" />
-                                    <CheckBox fx:id="m_50" layoutX="52.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="50" />
                                     <RadioButton fx:id="g_minutes_4" layoutX="18.0" layoutY="275.0" mnemonicParsing="false" text="Chaque minute entre les minutes" toggleGroup="$g_seconds" />
                                     <ComboBox fx:id="minutes_combo_1" layoutX="76.0" layoutY="43.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="131.0" layoutY="47.0" text="minute(s) à partir de la minute" />
@@ -203,59 +211,65 @@
                                     <ComboBox fx:id="minutes_combo_3" layoutX="228.0" layoutY="271.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="278.0" layoutY="275.0" text="et" />
                                     <ComboBox fx:id="minutes_combo_4" layoutX="291.0" layoutY="271.0" prefHeight="25.0" prefWidth="41.0" />
+                                    <CheckBox fx:id="m_00" layoutX="52.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="00" />
                                     <CheckBox fx:id="m_01" layoutX="97.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="01" />
+									<CheckBox fx:id="m_02" layoutX="137.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="02" />
+									<CheckBox fx:id="m_03" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
+									<CheckBox fx:id="m_04" layoutX="217.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
+									<CheckBox fx:id="m_05" layoutX="257.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
+									<CheckBox fx:id="m_06" layoutX="297.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
+									<CheckBox fx:id="m_07" layoutX="337.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
+									<CheckBox fx:id="m_08" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
+									<CheckBox fx:id="m_09" layoutX="417.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
+									<CheckBox fx:id="m_10" layoutX="52.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
                                     <CheckBox fx:id="m_11" layoutX="97.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="11" />
+									<CheckBox fx:id="m_12" layoutX="137.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
+									<CheckBox fx:id="m_13" layoutX="177.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
+									<CheckBox fx:id="m_14" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
+									<CheckBox fx:id="m_15" layoutX="257.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
+									<CheckBox fx:id="m_16" layoutX="297.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
+									<CheckBox fx:id="m_17" layoutX="337.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
+									<CheckBox fx:id="m_18" layoutX="377.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
+									<CheckBox fx:id="m_19" layoutX="417.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
+									<CheckBox fx:id="m_20" layoutX="52.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
                                     <CheckBox fx:id="m_21" layoutX="97.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="21" />
+									<CheckBox fx:id="m_22" layoutX="137.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="22" />
+									<CheckBox fx:id="m_23" layoutX="177.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="23" />
+									<CheckBox fx:id="m_24" layoutX="217.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="24" />
+									<CheckBox fx:id="m_25" layoutX="257.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="25" />
+									<CheckBox fx:id="m_26" layoutX="297.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="26" />
+									<CheckBox fx:id="m_27" layoutX="337.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="27" />
+									<CheckBox fx:id="m_28" layoutX="377.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="28" />
+									<CheckBox fx:id="m_29" layoutX="417.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="29" />
+									<CheckBox fx:id="m_30" layoutX="52.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="30" />
                                     <CheckBox fx:id="m_31" layoutX="97.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="31" />
+									<CheckBox fx:id="m_32" layoutX="137.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="32" />
+									<CheckBox fx:id="m_33" layoutX="177.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="33" />
+									<CheckBox fx:id="m_34" layoutX="217.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="34" />
+									<CheckBox fx:id="m_35" layoutX="257.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="35" />
+									<CheckBox fx:id="m_36" layoutX="297.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="36" />
+									<CheckBox fx:id="m_37" layoutX="337.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="37" />
+									<CheckBox fx:id="m_38" layoutX="377.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="38" />
+									<CheckBox fx:id="m_39" layoutX="417.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="39" />
+									<CheckBox fx:id="m_40" layoutX="52.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="40" />
                                     <CheckBox fx:id="m_41" layoutX="97.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="41" />
+									<CheckBox fx:id="m_42" layoutX="137.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="42" />
+									<CheckBox fx:id="m_43" layoutX="177.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="43" />
+									<CheckBox fx:id="m_44" layoutX="217.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="44" />
+									<CheckBox fx:id="m_45" layoutX="257.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="45" />
+									<CheckBox fx:id="m_46" layoutX="297.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="46" />
+									<CheckBox fx:id="m_47" layoutX="338.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="47" />
+									<CheckBox fx:id="m_48" layoutX="377.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="48" />
+									<CheckBox fx:id="m_49" layoutX="417.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="49" />
+									<CheckBox fx:id="m_50" layoutX="52.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="50" />
                                     <CheckBox fx:id="m_51" layoutX="97.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="51" />
-                                    <CheckBox fx:id="m_02" layoutX="137.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="02" />
-                                    <CheckBox fx:id="m_12" layoutX="137.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
-                                    <CheckBox fx:id="m_22" layoutX="137.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="22" />
-                                    <CheckBox fx:id="m_32" layoutX="137.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="32" />
-                                    <CheckBox fx:id="m_42" layoutX="137.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="42" />
                                     <CheckBox fx:id="m_52" layoutX="137.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="52" />
-                                    <CheckBox fx:id="m_03" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
-                                    <CheckBox fx:id="m_13" layoutX="177.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
-                                    <CheckBox fx:id="m_23" layoutX="177.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="23" />
-                                    <CheckBox fx:id="m_33" layoutX="177.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="33" />
-                                    <CheckBox fx:id="m_43" layoutX="177.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="43" />
                                     <CheckBox fx:id="m_53" layoutX="177.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="53" />
-                                    <CheckBox fx:id="m_04" layoutX="217.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
-                                    <CheckBox fx:id="m_14" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
-                                    <CheckBox fx:id="m_24" layoutX="217.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="24" />
-                                    <CheckBox fx:id="m_34" layoutX="217.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="34" />
-                                    <CheckBox fx:id="m_44" layoutX="217.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="44" />
                                     <CheckBox fx:id="m_54" layoutX="217.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="54" />
-                                    <CheckBox fx:id="m_05" layoutX="257.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
-                                    <CheckBox fx:id="m_15" layoutX="257.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
-                                    <CheckBox fx:id="m_25" layoutX="257.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="25" />
-                                    <CheckBox fx:id="m_35" layoutX="257.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="35" />
-                                    <CheckBox fx:id="m_45" layoutX="257.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="45" />
-                                    <CheckBox fx:id="m_55" layoutX="257.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="55" />
-                                    <CheckBox fx:id="m_06" layoutX="297.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
-                                    <CheckBox fx:id="m_16" layoutX="297.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
-                                    <CheckBox fx:id="m_26" layoutX="297.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="26" />
-                                    <CheckBox fx:id="m_36" layoutX="297.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="36" />
-                                    <CheckBox fx:id="m_46" layoutX="297.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="46" />
+									<CheckBox fx:id="m_55" layoutX="257.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="55" />
                                     <CheckBox fx:id="m_56" layoutX="297.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="56" />
-                                    <CheckBox fx:id="m_07" layoutX="337.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
-                                    <CheckBox fx:id="m_17" layoutX="337.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
-                                    <CheckBox fx:id="m_27" layoutX="337.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="27" />
-                                    <CheckBox fx:id="m_37" layoutX="337.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="37" />
-                                    <CheckBox fx:id="m_47" layoutX="338.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="47" />
                                     <CheckBox fx:id="m_57" layoutX="338.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="57" />
-                                    <CheckBox fx:id="m_08" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
-                                    <CheckBox fx:id="m_18" layoutX="377.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
-                                    <CheckBox fx:id="m_28" layoutX="377.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="28" />
-                                    <CheckBox fx:id="m_38" layoutX="377.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="38" />
-                                    <CheckBox fx:id="m_48" layoutX="377.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="48" />
-                                    <CheckBox fx:id="m_58" layoutX="377.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="58" />
-                                    <CheckBox fx:id="m_09" layoutX="417.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
-                                    <CheckBox fx:id="m_19" layoutX="417.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
-                                    <CheckBox fx:id="m_29" layoutX="417.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="29" />
-                                    <CheckBox fx:id="m_39" layoutX="417.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="39" />
-                                    <CheckBox fx:id="m_49" layoutX="417.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="49" />
+									<CheckBox fx:id="m_58" layoutX="377.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="58" />
                                     <CheckBox fx:id="m_59" layoutX="417.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="59" />
                                  </children>
                               </AnchorPane>
@@ -272,9 +286,6 @@
                                     </RadioButton>
                                     <RadioButton fx:id="g_hours_2" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Chaque" toggleGroup="$g_hours" />
                                     <RadioButton fx:id="g_hours_3" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Heure spécifique (Choisir un ou plusieurs)" toggleGroup="$g_hours" />
-                                    <CheckBox fx:id="h_00" layoutX="52.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="00" />
-                                    <CheckBox fx:id="h_10" layoutX="52.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
-                                    <CheckBox fx:id="h_20" layoutX="52.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
                                     <RadioButton fx:id="g_hours_4" layoutX="14.0" layoutY="188.0" mnemonicParsing="false" text="Chaque heure entre les heures" toggleGroup="$g_hours" />
                                     <ComboBox fx:id="hours_combo_1" layoutX="76.0" layoutY="43.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="131.0" layoutY="47.0" text="heure(s) à partir de l'heure" />
@@ -282,27 +293,30 @@
                                     <ComboBox fx:id="hours_combo_3" layoutX="209.0" layoutY="184.0" prefHeight="1.0" prefWidth="50.0" />
                                     <Label layoutX="266.0" layoutY="188.0" text="et" />
                                     <ComboBox fx:id="hours_combo_4" layoutX="280.0" layoutY="184.0" prefHeight="25.0" prefWidth="41.0" />
+									<CheckBox fx:id="h_00" layoutX="52.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="00" />
                                     <CheckBox fx:id="h_01" layoutX="97.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="01" />
-                                    <CheckBox fx:id="h_11" layoutX="97.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="11" />
-                                    <CheckBox fx:id="h_21" layoutX="97.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="21" />
                                     <CheckBox fx:id="h_02" layoutX="137.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="02" />
-                                    <CheckBox fx:id="h_12" layoutX="137.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
+									<CheckBox fx:id="h_03" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
+									<CheckBox fx:id="h_04" layoutX="217.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
+									<CheckBox fx:id="h_05" layoutX="257.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
+									<CheckBox fx:id="h_06" layoutX="297.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
+									<CheckBox fx:id="h_07" layoutX="337.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
+									<CheckBox fx:id="h_08" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
+									<CheckBox fx:id="h_09" layoutX="417.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
+                                    <CheckBox fx:id="h_10" layoutX="52.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
+                                    <CheckBox fx:id="h_11" layoutX="97.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="11" />
+									<CheckBox fx:id="h_12" layoutX="137.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
+									<CheckBox fx:id="h_13" layoutX="177.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
+									<CheckBox fx:id="h_14" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
+									<CheckBox fx:id="h_15" layoutX="257.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
+									<CheckBox fx:id="h_16" layoutX="297.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
+									<CheckBox fx:id="h_17" layoutX="337.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
+									<CheckBox fx:id="h_18" layoutX="377.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
+									<CheckBox fx:id="h_19" layoutX="417.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
+									<CheckBox fx:id="h_20" layoutX="52.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
+                                    <CheckBox fx:id="h_21" layoutX="97.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="21" />
                                     <CheckBox fx:id="h_22" layoutX="137.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="22" />
-                                    <CheckBox fx:id="h_03" layoutX="177.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
-                                    <CheckBox fx:id="h_13" layoutX="177.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
                                     <CheckBox fx:id="h_23" layoutX="177.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="23" />
-                                    <CheckBox fx:id="h_04" layoutX="217.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
-                                    <CheckBox fx:id="h_14" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
-                                    <CheckBox fx:id="h_05" layoutX="257.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
-                                    <CheckBox fx:id="h_15" layoutX="257.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
-                                    <CheckBox fx:id="h_06" layoutX="297.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
-                                    <CheckBox fx:id="h_16" layoutX="297.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
-                                    <CheckBox fx:id="h_07" layoutX="337.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
-                                    <CheckBox fx:id="h_17" layoutX="337.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
-                                    <CheckBox fx:id="h_08" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
-                                    <CheckBox fx:id="h_18" layoutX="377.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
-                                    <CheckBox fx:id="h_09" layoutX="417.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
-                                    <CheckBox fx:id="h_19" layoutX="417.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -318,9 +332,6 @@
                                     </RadioButton>
                                     <RadioButton fx:id="g_day_2" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Chaque" toggleGroup="$g_day" />
                                     <RadioButton fx:id="g_day_5" layoutX="14.0" layoutY="158.0" mnemonicParsing="false" text="Jour du spécifique (Choisir un ou plusieurs)" toggleGroup="$g_day" />
-                                    <CheckBox fx:id="d_10" layoutX="48.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
-                                    <CheckBox fx:id="d_20" layoutX="48.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
-                                    <CheckBox fx:id="d_30" layoutX="48.0" layoutY="257.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="30" />
                                     <RadioButton fx:id="g_day_11" layoutX="14.0" layoutY="416.0" mnemonicParsing="false" text="Au" toggleGroup="$g_day" />
                                     <ComboBox fx:id="day_combo_1" layoutX="76.0" layoutY="43.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="131.0" layoutY="47.0" text="jour(s) à partir de " />
@@ -328,34 +339,37 @@
                                     <ComboBox fx:id="day_combo_8" layoutX="63.0" layoutY="412.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="175.0" layoutY="416.0" text="du mois" />
                                     <ComboBox fx:id="day_combo_9" layoutX="120.0" layoutY="412.0" prefHeight="25.0" prefWidth="41.0" />
-                                    <CheckBox fx:id="d_01" layoutX="93.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="01" />
+									<CheckBox fx:id="d_01" layoutX="93.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="01" />
+									<CheckBox fx:id="d_02" layoutX="133.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="02" />
+									<CheckBox fx:id="d_03" layoutX="173.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
+									<CheckBox fx:id="d_04" layoutX="213.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
+									<CheckBox fx:id="d_05" layoutX="253.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
+									<CheckBox fx:id="d_06" layoutX="293.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
+									<CheckBox fx:id="d_07" layoutX="333.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
+									<CheckBox fx:id="d_08" layoutX="373.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
+									<CheckBox fx:id="d_09" layoutX="413.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
+									<CheckBox fx:id="d_10" layoutX="48.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="10" />
                                     <CheckBox fx:id="d_11" layoutX="93.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="11" />
+									<CheckBox fx:id="d_12" layoutX="133.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
+									<CheckBox fx:id="d_13" layoutX="173.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
+									<CheckBox fx:id="d_14" layoutX="213.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
+									<CheckBox fx:id="d_15" layoutX="253.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
+									<CheckBox fx:id="d_16" layoutX="293.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
+									<CheckBox fx:id="d_17" layoutX="333.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
+									<CheckBox fx:id="d_18" layoutX="373.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
+									<CheckBox fx:id="d_19" layoutX="413.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
+									<CheckBox fx:id="d_20" layoutX="48.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="20" />
                                     <CheckBox fx:id="d_21" layoutX="93.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="21" />
-                                    <CheckBox fx:id="d_31" layoutX="93.0" layoutY="257.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="31" />
-                                    <CheckBox fx:id="d_02" layoutX="133.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="02" />
-                                    <CheckBox fx:id="d_12" layoutX="133.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="12" />
-                                    <CheckBox fx:id="d_22" layoutX="133.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="22" />
-                                    <CheckBox fx:id="d_03" layoutX="173.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="03" />
-                                    <CheckBox fx:id="d_13" layoutX="173.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="13" />
+									<CheckBox fx:id="d_22" layoutX="133.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="22" />
                                     <CheckBox fx:id="d_23" layoutX="173.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="23" />
-                                    <CheckBox fx:id="d_04" layoutX="213.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="04" />
-                                    <CheckBox fx:id="d_14" layoutX="213.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="14" />
                                     <CheckBox fx:id="d_24" layoutX="213.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="24" />
-                                    <CheckBox fx:id="d_05" layoutX="253.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="05" />
-                                    <CheckBox fx:id="d_15" layoutX="253.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="15" />
-                                    <CheckBox fx:id="d_25" layoutX="253.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="25" />
-                                    <CheckBox fx:id="d_06" layoutX="293.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="06" />
-                                    <CheckBox fx:id="d_16" layoutX="293.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="16" />
-                                    <CheckBox fx:id="d_26" layoutX="293.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="26" />
-                                    <CheckBox fx:id="d_07" layoutX="333.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="07" />
-                                    <CheckBox fx:id="d_17" layoutX="333.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="17" />
-                                    <CheckBox fx:id="d_27" layoutX="333.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="27" />
-                                    <CheckBox fx:id="d_08" layoutX="373.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="08" />
-                                    <CheckBox fx:id="d_18" layoutX="373.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="18" />
-                                    <CheckBox fx:id="d_28" layoutX="373.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="28" />
-                                    <CheckBox fx:id="d_09" layoutX="413.0" layoutY="182.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="09" />
-                                    <CheckBox fx:id="d_19" layoutX="413.0" layoutY="207.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="19" />
-                                    <CheckBox fx:id="d_29" layoutX="413.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="29" />
+									<CheckBox fx:id="d_25" layoutX="253.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="25" />
+									<CheckBox fx:id="d_26" layoutX="293.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="26" />
+									<CheckBox fx:id="d_27" layoutX="333.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="27" />
+									<CheckBox fx:id="d_28" layoutX="373.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="28" />
+									<CheckBox fx:id="d_29" layoutX="413.0" layoutY="232.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="29" />
+									<CheckBox fx:id="d_30" layoutX="48.0" layoutY="257.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="30" />
+                                    <CheckBox fx:id="d_31" layoutX="93.0" layoutY="257.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="31" />
                                     <RadioButton fx:id="g_day_3" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" text="Chaque" toggleGroup="$g_day" />
                                     <ComboBox fx:id="day_combo_3" layoutX="75.0" layoutY="76.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="131.0" layoutY="80.0" text="jour(s) à partir du" />
@@ -395,9 +409,6 @@
                                     </RadioButton>
                                     <RadioButton fx:id="g_month_2" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Chaque" toggleGroup="$g_month" />
                                     <RadioButton fx:id="g_month_3" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Mois spécifique (Choisir un ou plusieurs)" toggleGroup="$g_month" />
-                                    <CheckBox fx:id="m_janvier" layoutX="62.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Janvier" />
-                                    <CheckBox fx:id="m_juin" layoutX="78.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Juin" />
-                                    <CheckBox fx:id="m_novembre" layoutX="43.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Novembre" />
                                     <RadioButton fx:id="g_month_4" layoutX="14.0" layoutY="194.0" mnemonicParsing="false" text="Chaque mois entre les mois" toggleGroup="$g_month" />
                                     <ComboBox fx:id="month_combo_1" layoutX="76.0" layoutY="43.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="131.0" layoutY="47.0" text="mois à partir du mois de" />
@@ -405,15 +416,18 @@
                                     <ComboBox fx:id="month_combo_3" layoutX="224.0" layoutY="190.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="274.0" layoutY="194.0" text="et" />
                                     <ComboBox fx:id="month_combo_4" layoutX="285.0" layoutY="190.0" prefHeight="25.0" prefWidth="41.0" />
-                                    <CheckBox fx:id="m_fevrier" layoutX="144.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Février" />
-                                    <CheckBox fx:id="m_juillet" layoutX="149.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Juillet" />
+									<CheckBox fx:id="m_janvier" layoutX="62.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Janvier" />
+									<CheckBox fx:id="m_fevrier" layoutX="144.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Février" />
+									<CheckBox fx:id="m_mars" layoutX="216.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Mars" />
+									<CheckBox fx:id="m_avril" layoutX="300.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Avril" />
+									<CheckBox fx:id="m_mai" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Mai" />
+                                    <CheckBox fx:id="m_juin" layoutX="78.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Juin" />
+									<CheckBox fx:id="m_juillet" layoutX="149.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Juillet" />
+									<CheckBox fx:id="m_aout" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Août" />
+									<CheckBox fx:id="m_septembre" layoutX="266.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Septembre" />
+									<CheckBox fx:id="m_octobre" layoutX="352.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Octobre" />
+                                    <CheckBox fx:id="m_novembre" layoutX="43.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Novembre" />
                                     <CheckBox fx:id="m_decembre" layoutX="125.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Décembre" />
-                                    <CheckBox fx:id="m_mars" layoutX="216.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Mars" />
-                                    <CheckBox fx:id="m_aout" layoutX="217.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Août" />
-                                    <CheckBox fx:id="m_avril" layoutX="300.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Avril" />
-                                    <CheckBox fx:id="m_septembre" layoutX="266.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Septembre" />
-                                    <CheckBox fx:id="m_mai" layoutX="377.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Mai" />
-                                    <CheckBox fx:id="m_octobre" layoutX="352.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Octobre" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -428,15 +442,7 @@
                                        </toggleGroup></RadioButton>
                                     <RadioButton fx:id="g_year_2" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Chaque" toggleGroup="$g_year" />
                                     <RadioButton fx:id="g_year_3" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Année spécifique (Choisir un ou plusieurs)" toggleGroup="$g_year" />
-                                    <CheckBox fx:id="year_2019" layoutX="29.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2019" />
-                                    <CheckBox fx:id="year_2028" layoutX="29.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2028" />
-                                    <CheckBox fx:id="year_2037" layoutX="29.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2037" />
-                                    <CheckBox fx:id="year_2046" layoutX="29.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2046" />
-                                    <CheckBox fx:id="year_2055" layoutX="29.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2055" />
-                                    <CheckBox fx:id="year_2064" layoutX="29.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2064" />
-                                    <CheckBox fx:id="year_2073" layoutX="29.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2073" />
-                                    <CheckBox fx:id="year_2082" layoutX="29.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2082" />
-                                    <CheckBox fx:id="year_2091" layoutX="29.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2091" />
+                                    
                                     <RadioButton fx:id="g_year_4" layoutX="16.0" layoutY="340.0" mnemonicParsing="false" text="Chaque année entre les années" toggleGroup="$g_year" />
                                     <ComboBox fx:id="year_combo_1" layoutX="76.0" layoutY="43.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="131.0" layoutY="47.0" text="an(s) à partir de l'année" />
@@ -444,77 +450,86 @@
                                     <ComboBox fx:id="year_combo_3" layoutX="232.0" layoutY="336.0" prefHeight="25.0" prefWidth="41.0" />
                                     <Label layoutX="292.0" layoutY="340.0" text="et" />
                                     <ComboBox fx:id="year_combo_4" layoutX="305.0" layoutY="336.0" prefHeight="25.0" prefWidth="41.0" />
-                                    <CheckBox fx:id="year_2020" layoutX="79.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2020" />
-                                    <CheckBox fx:id="year_2029" layoutX="79.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2029" />
-                                    <CheckBox fx:id="year_2038" layoutX="79.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2038" />
-                                    <CheckBox fx:id="year_2047" layoutX="79.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2047" />
-                                    <CheckBox fx:id="year_2056" layoutX="79.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2056" />
-                                    <CheckBox fx:id="year_2065" layoutX="79.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2065" />
-                                    <CheckBox fx:id="year_2074" layoutX="79.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2074" />
-                                    <CheckBox fx:id="year_2083" layoutX="79.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2083" />
-                                    <CheckBox fx:id="year_2092" layoutX="79.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2092" />
-                                    <CheckBox fx:id="year_2021" layoutX="129.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2021" />
-                                    <CheckBox fx:id="year_2030" layoutX="129.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2030" />
-                                    <CheckBox fx:id="year_2039" layoutX="129.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2039" />
-                                    <CheckBox fx:id="year_2048" layoutX="129.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2048" />
-                                    <CheckBox fx:id="year_2057" layoutX="129.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2057" />
-                                    <CheckBox fx:id="year_2066" layoutX="129.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2066" />
-                                    <CheckBox fx:id="year_2075" layoutX="129.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2075" />
-                                    <CheckBox fx:id="year_2084" layoutX="129.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2084" />
-                                    <CheckBox fx:id="year_2093" layoutX="129.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2093" />
+									<CheckBox fx:id="year_2019" layoutX="29.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2019" />
+									<CheckBox fx:id="year_2020" layoutX="79.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2020" />
+									<CheckBox fx:id="year_2021" layoutX="129.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2021" />
                                     <CheckBox fx:id="year_2022" layoutX="179.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2022" />
-                                    <CheckBox fx:id="year_2031" layoutX="179.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2031" />
-                                    <CheckBox fx:id="year_2040" layoutX="179.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2040" />
-                                    <CheckBox fx:id="year_2049" layoutX="179.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2049" />
-                                    <CheckBox fx:id="year_2058" layoutX="179.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2058" />
-                                    <CheckBox fx:id="year_2067" layoutX="179.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2067" />
-                                    <CheckBox fx:id="year_2076" layoutX="179.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2076" />
-                                    <CheckBox fx:id="year_2085" layoutX="179.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2085" />
-                                    <CheckBox fx:id="year_2094" layoutX="179.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2094" />
-                                    <CheckBox fx:id="year_2023" layoutX="229.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2023" />
-                                    <CheckBox fx:id="year_2032" layoutX="229.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2032" />
-                                    <CheckBox fx:id="year_2041" layoutX="229.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2041" />
-                                    <CheckBox fx:id="year_2050" layoutX="229.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2050" />
-                                    <CheckBox fx:id="year_2059" layoutX="229.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2059" />
-                                    <CheckBox fx:id="year_2068" layoutX="229.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2068" />
-                                    <CheckBox fx:id="year_2077" layoutX="229.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2077" />
-                                    <CheckBox fx:id="year_2086" layoutX="229.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2086" />
-                                    <CheckBox fx:id="year_2094" layoutX="229.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2094" />
-                                    <CheckBox fx:id="year_2024" layoutX="279.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2024" />
-                                    <CheckBox fx:id="year_2033" layoutX="279.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2033" />
-                                    <CheckBox fx:id="year_2042" layoutX="279.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2042" />
-                                    <CheckBox fx:id="year_2051" layoutX="279.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2051" />
-                                    <CheckBox fx:id="year_2060" layoutX="279.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2060" />
-                                    <CheckBox fx:id="year_2069" layoutX="279.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2069" />
-                                    <CheckBox fx:id="year_2078" layoutX="279.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2078" />
-                                    <CheckBox fx:id="year_2087" layoutX="279.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2087" />
-                                    <CheckBox fx:id="year_2096" layoutX="280.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2096" />
-                                    <CheckBox fx:id="year_2025" layoutX="329.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2025" />
-                                    <CheckBox fx:id="year_2034" layoutX="329.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2034" />
-                                    <CheckBox fx:id="year_2043" layoutX="329.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2043" />
-                                    <CheckBox fx:id="year_2052" layoutX="329.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2052" />
-                                    <CheckBox fx:id="year_2061" layoutX="329.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2061" />
-                                    <CheckBox fx:id="year_2070" layoutX="329.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2070" />
-                                    <CheckBox fx:id="year_2079" layoutX="329.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2079" />
-                                    <CheckBox fx:id="year_2088" layoutX="329.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2088" />
-                                    <CheckBox fx:id="year_2097" layoutX="329.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2097" />
-                                    <CheckBox fx:id="year_2026" layoutX="379.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2026" />
-                                    <CheckBox fx:id="year_2035" layoutX="379.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2035" />
-                                    <CheckBox fx:id="year_2044" layoutX="379.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2044" />
-                                    <CheckBox fx:id="year_2053" layoutX="379.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2053" />
-                                    <CheckBox fx:id="year_2062" layoutX="379.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2062" />
-                                    <CheckBox fx:id="year_2071" layoutX="379.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2071" />
-                                    <CheckBox fx:id="year_2080" layoutX="379.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2080" />
-                                    <CheckBox fx:id="year_2089" layoutX="379.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2089" />
-                                    <CheckBox fx:id="year_2098" layoutX="379.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2098" />
+									<CheckBox fx:id="year_2023" layoutX="229.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2023" />
+									<CheckBox fx:id="year_2024" layoutX="279.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2024" />
+									<CheckBox fx:id="year_2025" layoutX="329.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2025" />
+									<CheckBox fx:id="year_2026" layoutX="379.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2026" />
                                     <CheckBox fx:id="year_2027" layoutX="429.0" layoutY="103.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2027" />
+                                    <CheckBox fx:id="year_2028" layoutX="29.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2028" />
+									<CheckBox fx:id="year_2029" layoutX="79.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2029" />
+									<CheckBox fx:id="year_2030" layoutX="129.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2030" />
+                                    <CheckBox fx:id="year_2031" layoutX="179.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2031" />
+									<CheckBox fx:id="year_2032" layoutX="229.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2032" />
+									<CheckBox fx:id="year_2033" layoutX="279.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2033" />
+									<CheckBox fx:id="year_2034" layoutX="329.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2034" />
+									<CheckBox fx:id="year_2035" layoutX="379.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2035" />
                                     <CheckBox fx:id="year_2036" layoutX="429.0" layoutY="128.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2036" />
+                                    <CheckBox fx:id="year_2037" layoutX="29.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2037" />
+									<CheckBox fx:id="year_2038" layoutX="79.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2038" />
+									<CheckBox fx:id="year_2039" layoutX="129.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2039" />
+									<CheckBox fx:id="year_2040" layoutX="179.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2040" />
+									<CheckBox fx:id="year_2041" layoutX="229.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2041" />
+									<CheckBox fx:id="year_2042" layoutX="279.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2042" />
+									<CheckBox fx:id="year_2043" layoutX="329.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2043" />
+									<CheckBox fx:id="year_2044" layoutX="379.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2044" />
                                     <CheckBox fx:id="year_2045" layoutX="429.0" layoutY="153.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2045" />
+                                    <CheckBox fx:id="year_2046" layoutX="29.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2046" />
+									<CheckBox fx:id="year_2047" layoutX="79.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2047" />
+									<CheckBox fx:id="year_2048" layoutX="129.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2048" />
+                                    <CheckBox fx:id="year_2049" layoutX="179.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2049" />
+									<CheckBox fx:id="year_2050" layoutX="229.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2050" />
+									<CheckBox fx:id="year_2051" layoutX="279.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2051" />
+									<CheckBox fx:id="year_2052" layoutX="329.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2052" />
+									<CheckBox fx:id="year_2053" layoutX="379.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2053" />
                                     <CheckBox fx:id="year_2054" layoutX="429.0" layoutY="178.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2054" />
+									<CheckBox fx:id="year_2055" layoutX="29.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2055" />
+									<CheckBox fx:id="year_2056" layoutX="79.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2056" />
+									<CheckBox fx:id="year_2057" layoutX="129.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2057" />
+                                    <CheckBox fx:id="year_2058" layoutX="179.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2058" />
+									<CheckBox fx:id="year_2059" layoutX="229.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2059" />
+									<CheckBox fx:id="year_2060" layoutX="279.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2060" />
+									<CheckBox fx:id="year_2061" layoutX="329.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2061" />
+									<CheckBox fx:id="year_2062" layoutX="379.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2062" />
                                     <CheckBox fx:id="year_2063" layoutX="429.0" layoutY="203.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2063" />
+                                    <CheckBox fx:id="year_2064" layoutX="29.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2064" />
+									<CheckBox fx:id="year_2065" layoutX="79.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2065" />
+									<CheckBox fx:id="year_2066" layoutX="129.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2066" />
+									<CheckBox fx:id="year_2067" layoutX="179.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2067" />
+									<CheckBox fx:id="year_2068" layoutX="229.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2068" />
+									<CheckBox fx:id="year_2069" layoutX="279.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2069" />
+									<CheckBox fx:id="year_2070" layoutX="329.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2070" />
+									<CheckBox fx:id="year_2071" layoutX="379.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2071" />
                                     <CheckBox fx:id="year_2072" layoutX="429.0" layoutY="228.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2072" />
+									<CheckBox fx:id="year_2073" layoutX="29.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2073" />
+									<CheckBox fx:id="year_2074" layoutX="79.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2074" />
+									<CheckBox fx:id="year_2075" layoutX="129.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2075" />
+									<CheckBox fx:id="year_2076" layoutX="179.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2076" />
+									<CheckBox fx:id="year_2077" layoutX="229.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2077" />
+									<CheckBox fx:id="year_2078" layoutX="279.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2078" />
+									<CheckBox fx:id="year_2079" layoutX="329.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2079" />
+									<CheckBox fx:id="year_2080" layoutX="379.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2080" />
                                     <CheckBox fx:id="year_2081" layoutX="429.0" layoutY="252.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2081" />
+                                    <CheckBox fx:id="year_2082" layoutX="29.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2082" />
+									<CheckBox fx:id="year_2083" layoutX="79.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2083" />
+                                    <CheckBox fx:id="year_2084" layoutX="129.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2084" />
+									<CheckBox fx:id="year_2085" layoutX="179.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2085" />
+									<CheckBox fx:id="year_2086" layoutX="229.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2086" />
+									<CheckBox fx:id="year_2087" layoutX="279.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2087" />
+									<CheckBox fx:id="year_2088" layoutX="329.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2088" />
+									<CheckBox fx:id="year_2089" layoutX="379.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2089" />
                                     <CheckBox fx:id="year_2090" layoutX="429.0" layoutY="278.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2090" />
+                                    <CheckBox fx:id="year_2091" layoutX="29.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2091" />
+                                    <CheckBox fx:id="year_2092" layoutX="79.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2092" />
+                                    <CheckBox fx:id="year_2093" layoutX="129.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2093" />
+									<CheckBox fx:id="year_2094" layoutX="179.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2094" />
+									<CheckBox fx:id="year_2095" layoutX="229.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2095" />
+									<CheckBox fx:id="year_2096" layoutX="279.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2096" />
+									<CheckBox fx:id="year_2097" layoutX="329.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2097" />
+									<CheckBox fx:id="year_2098" layoutX="379.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2098" />
                                     <CheckBox fx:id="year_2099" layoutX="429.0" layoutY="303.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="2099" />
                                  </children>
                               </AnchorPane>

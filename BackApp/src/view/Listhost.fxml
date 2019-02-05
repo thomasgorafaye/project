@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -20,13 +21,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListHostController">
+<VBox fx:id="root" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListHostController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar prefHeight="25.0" prefWidth="789.0" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" onAction="#item" text="New" />
             <MenuItem mnemonicParsing="false" text="Open…" />
             <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -76,19 +77,52 @@
               </textFill>
             </Label>
                         <Line endX="100.0" layoutX="107.0" layoutY="41.0" startX="-100.0" />
-                        <TableView layoutY="42.0" prefHeight="504.0" prefWidth="${anchor1.width*0.9}">
+                        <TableView fx:id="tableView" layoutY="42.0" prefHeight="504.0" prefWidth="${anchor1.width*0.9}">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn prefWidth="75.0" text="SID">
+							<cellValueFactory><PropertyValueFactory property="sid" /></cellValueFactory>
+							</TableColumn>
+                            <TableColumn prefWidth="75.0" text="Nom machine">
+							<cellValueFactory><PropertyValueFactory property="hostname" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Nom propriétaire">
+							<cellValueFactory><PropertyValueFactory property="ownername" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Email">
+							<cellValueFactory><PropertyValueFactory property="email" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Nom OS">
+							<cellValueFactory><PropertyValueFactory property="osname" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Utilisateur Syst.">
+							<cellValueFactory><PropertyValueFactory property="osuser" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Mot passe Syst.">
+							<cellValueFactory><PropertyValueFactory property="ospassword" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Version Orcl">
+							<cellValueFactory><PropertyValueFactory property="version" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Utilisateur DB">
+							<cellValueFactory><PropertyValueFactory property="dbuser" /></cellValueFactory>
+							</TableColumn>
+							<TableColumn prefWidth="75.0" text="Mot passe DB">
+							<cellValueFactory><PropertyValueFactory property="dbpassword" /></cellValueFactory>
+							</TableColumn>
                           </columns>
                         </TableView>
+                        <Button layoutX="163.0" layoutY="565.0" mnemonicParsing="false" text="Ajouter" />
+                        <Button layoutX="218.0" layoutY="565.0" mnemonicParsing="false" onAction="#modifier" text="Modifier" />
+                        <Button layoutX="279.0" layoutY="565.0" mnemonicParsing="false" onAction="#supprimer" text="Supprimer" />
+                        <Button layoutX="351.0" layoutY="565.0" mnemonicParsing="false" text="Rechercher" />
+                        <TextField layoutX="427.0" layoutY="565.0" />
           </children>
         </AnchorPane>
 		</content>
         </ScrollPane>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Enregistrement" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+            <Label fx:id="entete" alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Enregistrement" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                   <Line endX="100.0" layoutX="101.0" layoutY="41.0" startX="-100.0" />
 						<Label layoutX="14.0" layoutY="51.0" text="SID" />
                         <Label layoutX="14.0" layoutY="81.0" text="Nom Machine" />

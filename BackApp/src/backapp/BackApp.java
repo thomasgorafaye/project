@@ -22,7 +22,7 @@ public class BackApp extends Application {
     public void start(Stage stage) throws Exception {
         Dao dao = new Dao();
         dao.init();
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Listcron.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Listbackup.fxml"));
         
         Scene scene = new Scene(root);
         
