@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -45,6 +46,9 @@ public class ListHostController implements Initializable {
     
     @FXML 
     private Parent root;
+    
+    @FXML 
+    private SplitPane pane;
     
     private ObservableList<Host> HostList = FXCollections.observableArrayList();
     
@@ -124,7 +128,7 @@ public class ListHostController implements Initializable {
     @FXML
     private void item(ActionEvent event) throws IOException {
         Stage stage = (Stage) root.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/view/Createhost.fxml"));
+        pane = FXMLLoader.load(getClass().getResource("/view/test.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
