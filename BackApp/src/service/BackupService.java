@@ -9,6 +9,8 @@ import dao.BackupDao;
 import java.util.List;
 import model.Backup;
 import model.Host;
+import tool.CheckArchiveLog;
+import tool.Notification;
 import tool.Script;
 
 /**
@@ -31,10 +33,25 @@ public class BackupService {
         return backupDao.find(sid);
     }
     
-    public boolean create(Host h, Backup b){
-        Script script = new Script();
-        script.run(h,b);
-        return backupDao.create(b);
+    public int create(Host h, Backup b){
+        CheckArchiveLog archive = new CheckArchiveLog();
+        int result = archive.check(h);
+        if((result ==0)||((result==2)&&(b.getMethod().contains("Export")||(b.getMethod().contains("Xcopy")&&b.getType().contains("froid"))))){
+            Script script = new Script();
+            script.run(h,b);
+        }    
+        else{
+            b.setSuccess(false);
+        }
+        String path = b.getLog();
+        long timestamp = b.getTimestamp();
+        String log;
+        if(b.getMethod().contains("Export")){
+            log = path + "\\export_full.log";
+            b.setLog(log);
+        }        
+        backupDao.create(b);
+        return result;
     }
     
     public boolean update(Backup h){
@@ -43,5 +60,21 @@ public class BackupService {
     
      public boolean delete(Backup h){
         return backupDao.delete(h);
+    }
+    
+    public int getTotal(){
+        return backupDao.getTotal();
+    }
+    
+    public int getTotalSuccess(){
+        return backupDao.getTotalSuccess();
+    }
+    
+    public int getTotalPlanned(){
+        return backupDao.getTotalPlanned();
+    }
+    
+    public List<Backup> getTotalGroupBy(){
+        return backupDao.getTotalGroupby();
     }
 }

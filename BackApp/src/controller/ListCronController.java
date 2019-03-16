@@ -5,8 +5,10 @@
  */
 package controller;
 
+import backapp.BackApp;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +20,7 @@ import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,16 +31,27 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.Cron;
+import model.Host;
+import model.Plan;
+import service.CronService;
+import service.HostService;
+import service.PlanService;
+import tool.Planificateur;
 
 /**
  *
  * @author thomas
  */
 public class ListCronController implements Initializable {
+    
+        @FXML
+        private TextField filter;
     
         @FXML
         private VBox root;
@@ -121,10 +135,14 @@ public class ListCronController implements Initializable {
     private Label entete;
     
     private ObservableList<Cron> CronList = FXCollections.observableArrayList();
+    private ObservableList<Cron> CronListFilter = FXCollections.observableArrayList();
     
-    //private CronService cronService;
+    private CronService cronService;
     
     private Cron selected;
+    
+    private Plan plan;
+    private Host host;
 
     public ListCronController() {
         this.listAnnee = new ArrayList();
@@ -196,16 +214,34 @@ public class ListCronController implements Initializable {
         year_combo_3.getItems().addAll(listAnnee);
         year_combo_4.getItems().addAll(listAnnee);
         
-        //cronService = new CronService();
-        //CronList.addAll(cronService.findAll());
-        tableView.getItems().addAll(CronList);
-        tableView.getItems().add(new Cron(1,"Rose",true));
+        plan = BackApp.planInProc;
+        HostService hostService = new HostService();
+        host = hostService.find(plan.getHost());
+        
+        cronService = new CronService();
+        CronList.addAll(cronService.findByPlan(plan.getId()));
+        CronListFilter.addAll(CronList);
+        tableView.setItems(CronListFilter);
         tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Cron>() {
             @Override
             public void changed(ObservableValue<? extends Cron> observable, Cron oldValue, Cron newValue) {
                 selected=newValue;
                 System.out.println("Selected item: " + newValue);
             }
+        });
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        CronList.addListener(new ListChangeListener<Cron>(){
+            @Override
+           public void onChanged(ListChangeListener.Change<? extends Cron> change){
+               updateFilteredData();
+           }
+        });
+        filter.textProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                updateFilteredData();
+            }
+            
         });
     }    
     
@@ -398,6 +434,19 @@ public class ListCronController implements Initializable {
             l_year = "";
         }
         expression.setText(l_seconds+l_minutes+l_hours+l_day+l_month+l_wd+l_year);
+        
+        if(entete.getText().equals("Enregistrement")){
+            int id = (int) (Math.random()*1000);
+            Cron c = new Cron(id,expression.getText(),true,plan.getId());
+            cronService.create(host, plan, c);
+            tableView.getItems().add(c);
+        }else{
+            Cron c = new Cron(selected.getId(),expression.getText(),true,plan.getId());
+            cronService.update(c);
+           int index = CronList.indexOf(selected);
+           CronList.set(index, c);
+        }
+       
     }
 	
     @FXML
@@ -413,7 +462,7 @@ public class ListCronController implements Initializable {
     private void supprimer(ActionEvent event) {
         System.out.println("You clicked me!");
         if(selected != null){
-            //hostService.delete(selected);
+            cronService.delete(selected);
             tableView.getItems().remove(selected);
         }  
     }
@@ -431,5 +480,29 @@ public class ListCronController implements Initializable {
     private void ajouter(ActionEvent event) {
         System.out.println("You clicked me!");
         entete.setText("Enregistrement");
+    }
+    
+    private void updateFilteredData(){
+        CronListFilter.clear();
+        for(Cron h : CronList){
+            if(matchesFilter(h)){
+                CronListFilter.add(h);
+            }
+        }
+        ArrayList<TableColumn<Cron,?>> sortOrder = new ArrayList<>(tableView.getSortOrder());
+        tableView.getSortOrder().clear();
+        tableView.getSortOrder().addAll(sortOrder);
+    }
+
+    private boolean matchesFilter(Cron h) {
+        String filterString = filter.getText();
+        if((filterString == null)||filterString.isEmpty()){
+            return true;
+        }
+        String lowerCaseFilterString = filterString.toLowerCase();
+        if(h.toString().toLowerCase().contains(lowerCaseFilterString)){
+            return true;
+        }
+        return false;
     }
 }

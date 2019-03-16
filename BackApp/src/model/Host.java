@@ -33,7 +33,7 @@ public class Host {
         this("", "", "","", "", "","", "", "","");
     }
 
-    public Host(String sid, String hostname, String ownername, String email, String osname, String osuser, String ospassword, String version, String dbuser, String dbpassword) {
+    public Host(String sid, String hostname, String ownername, String email, String osname, String osuser, String ospassword,String dbuser, String dbpassword, String version) {
         this.sid = new SimpleStringProperty(sid);
         this.hostname = new SimpleStringProperty(hostname);
         this.ownername = new SimpleStringProperty(ownername);
@@ -147,10 +147,14 @@ public class Host {
     public void setBackups(List<Backup> backups) {
         this.backups = backups;
     }
+    
+    public String toSearch() {
+        return "Host{" + "sid=" + sid + ", hostname=" + hostname + ", ownername=" + ownername + ", email=" + email + ", osname=" + osname + ", osuser=" + osuser + ", ospassword=" + ospassword + ", version=" + version + ", dbuser=" + dbuser + ", dbpassword=" + dbpassword + '}';
+    }
 
     @Override
     public String toString() {
-        return "Host{" + "sid=" + sid + ", hostname=" + hostname + ", ownername=" + ownername + ", email=" + email + ", osname=" + osname + ", osuser=" + osuser + ", ospassword=" + ospassword + ", version=" + version + ", dbuser=" + dbuser + ", dbpassword=" + dbpassword + '}';
+        return "Database : " + sid.get().toUpperCase() + " (" + hostname.get() + ")";
     }
     
     

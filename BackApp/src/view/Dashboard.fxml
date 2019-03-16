@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashBoardController">
+         <children>
+            <PieChart fx:id="chart1" layoutX="82.0" layoutY="145.0" prefHeight="219.0" prefWidth="288.0" />
+            <PieChart fx:id="chart2" layoutX="404.0" layoutY="145.0" prefHeight="219.0" prefWidth="300.0" />
+            <BarChart fx:id="chart3" layoutX="82.0" layoutY="375.0" prefHeight="219.0" prefWidth="272.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <LineChart fx:id="chart4" layoutX="428.0" layoutY="375.0" prefHeight="219.0" prefWidth="374.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <Label layoutX="154.0" layoutY="42.0" text="Bases de données enregistrées">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="host" layoutX="90.0" layoutY="28.0" text="35" textFill="#0b7ab2">
+               <font>
+                  <Font name="Cambria Math" size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="499.0" layoutY="42.0" text="Planifications enregistrées">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="plan" layoutX="428.0" layoutY="28.0" text="17" textFill="#0b7ab2">
+               <font>
+                  <Font name="Cambria Math" size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="154.0" layoutY="103.0" text="Sauvegardes effectuées">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="backup" layoutX="64.0" layoutY="88.0" text="135" textFill="#0b7ab2">
+               <font>
+                  <Font name="Cambria Math" size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="492.0" layoutY="102.0" text="Déclencheurs de sauvegarde">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="cron" layoutX="428.0" layoutY="88.0" text="35" textFill="#0b7ab2">
+               <font>
+                  <Font name="Cambria Math" size="48.0" />
+               </font>
+            </Label>
+         </children>
+    </AnchorPane>

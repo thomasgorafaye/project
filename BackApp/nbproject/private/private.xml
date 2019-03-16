@@ -4,39 +4,60 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/model/Plan.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Listbackup.fxml</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/model/Elements.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/CronDao.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/service/HostService.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/service/BackupService.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Listcron.fxml</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/backapp/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/VariantDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Template.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/file/parfile.prm</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/ListBackupController.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/model/Host.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/CronConvert.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Createplan.fxml</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/Planificateur.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/CreatePlanController.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/ListPlanController.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/service/PlanService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/TemplateController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/VariantDialogController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/CheckArchiveLog.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/ServiceBackup.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/BackupDao.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Createbackup.fxml</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/HostDao.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/properties/H2.properties</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/CreateBackupController.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Createhost.fxml</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/backapp/BackApp.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/ListCronController.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Listhost.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Listplan.fxml</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/Script.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/Dao.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/CreateHostController.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/BackupJob.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/example.fxml</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/AfficheurFlux.java</file>
-            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/PlanDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/ListHostController.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/backapp/FXMLDocument.fxml</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/model/Backup.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/model/Cron.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/model/Variant.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Listbackup.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/DashBoardController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Variantdialog.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/CronDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/service/BackupService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/backapp/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/properties/log4j.properties</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/CronConvert.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/service/CronService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Createplan.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/ListPlanController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/service/PlanService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Flux.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/HostDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/properties/H2.properties</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Dashboard.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/view/Createhost.fxml</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/Mail.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/ListCronController.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/Notification.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/service/VariantService.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/Dao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/tool/BackupJob.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/dao/PlanDao.java</file>
+            <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/controller/FluxController.java</file>
             <file>file:/C:/Users/thomas/Documents/NetBeansProjects/project/BackApp/src/file/make_cold_backup.sql</file>
         </group>
     </open-files>

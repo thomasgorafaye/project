@@ -29,6 +29,10 @@ public class HostService {
         return hostDao.find(sid);
     }
     
+    public List<String> findAllSid(){
+        return hostDao.findAllSid();
+    }
+    
     public boolean create(Host h){
         return hostDao.create(h);
     }
@@ -39,6 +43,10 @@ public class HostService {
     
      public boolean delete(Host h){
         return hostDao.delete(h);
+    }
+     
+     public long getTotal(){
+        return hostDao.getTotal();
     }
     
 }

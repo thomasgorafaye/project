@@ -1,21 +1,13 @@
---export full des données
-
-C:\> exp userid=system/manager file=c:\backup\export_full.dump 
-log=c:\control\export_full.log full=y rows=n 
-
---export du schéma scott
-
-C:\> exp userid=system/manager file=c:\backup\export_full.dump 
-log=c:\control\export_full.log owner=scott
-
---export de la table ACCOUNT de SCOOT
-
-C:\> exp userid=system/manager file=c:\backup\export_full.dump 
-log=c:\control\export_full.log tables=scott.account 
-
---export du tablespace userid
-
-C:\> exp userid=system/manager file=c:\backup\export_full.dump 
-log=c:\control\export_full.log tablespaces=user
-
-exp parfile=c:\backup\parfile.prm
+IF %object% ==database (
+SET object=full
+SET name=y 
+)
+IF %dbuser% ==system (
+exp userid=\"%dbuser%/%dbpassword%@%sid% as sysdba\" file=%d_repertory%\export_full_%timestamp%.dump log=%log%\export_full_%timestamp%.log %object%=%name% rows=n 
+)ELSE (
+IF %dbuser% ==sys (
+exp userid=\"%dbuser%/%dbpassword%@%sid% as sysdba\" file=%d_repertory%\export_full_%timestamp%.dump log=%log%\export_full_%timestamp%.log %object%=%name% rows=n 
+)ELSE (
+exp userid=\"%dbuser%/%dbpassword%@%sid%\" file=%d_repertory%\export_full_%timestamp%.dump log=%log%\export_full_%timestamp%.log %object%=%name% rows=n 
+)
+)

@@ -1,0 +1,1 @@
+sqlplus -L %dbuser%/%dbpassword%@%sid% as sysdba @check_archivelog_mode.sql

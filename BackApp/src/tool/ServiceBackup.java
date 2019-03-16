@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Cron;
 import model.Host;
 import model.Plan;
 import service.HostService;
@@ -27,11 +28,15 @@ public class ServiceBackup {
             Iterator<Plan> itPlan = host.getPlans().iterator();
             while(itPlan.hasNext()){
                 Plan plan = itPlan.next();
-                try {
-                    Planificateur.plan(host, plan);
-                } catch (ParseException ex) {
-                    Logger.getLogger(ServiceBackup.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                Iterator<Cron> itCron = plan.getCrons().iterator();
+                while(itPlan.hasNext()){
+                    Cron cron = itCron.next();
+                    try {
+                        Planificateur.plan(host, plan, cron);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ServiceBackup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }    
             }
         }
         

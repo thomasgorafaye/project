@@ -1,36 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.cell.*?>
-
 
 <AnchorPane VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListHostController">
   <children>
-    <SplitPane fx:id="pane" dividerPositions="0.2505567928730512" focusTraversable="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+    <SplitPane fx:id="pane" dividerPositions="0.8505567928730512" focusTraversable="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
       <items>
 	<ScrollPane minWidth="530.0" prefHeight="-1.0" prefWidth="-1.0">
           <content>
-        <AnchorPane id="Content" fx:id="anchor1" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="530.0">
+        <AnchorPane id="Content" fx:id="anchor1" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0">
           <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Liste" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Bases de données" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
@@ -39,7 +33,7 @@
               </textFill>
             </Label>
                         <Line endX="100.0" layoutX="107.0" layoutY="41.0" startX="-100.0" />
-                        <TableView fx:id="tableView" layoutY="42.0" prefHeight="504.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tableView" layoutY="42.0" prefHeight="504.0" prefWidth="970">
                           <columns>
                             <TableColumn prefWidth="75.0" text="SID">
 							<cellValueFactory><PropertyValueFactory property="sid" /></cellValueFactory>
@@ -73,11 +67,31 @@
 							</TableColumn>
                           </columns>
                         </TableView>
-                        <Button layoutX="163.0" layoutY="565.0" mnemonicParsing="false" text="Ajouter" />
-                        <Button layoutX="218.0" layoutY="565.0" mnemonicParsing="false" onAction="#modifier" text="Modifier" />
-                        <Button layoutX="279.0" layoutY="565.0" mnemonicParsing="false" onAction="#supprimer" text="Supprimer" />
-                        <Button layoutX="351.0" layoutY="565.0" mnemonicParsing="false" text="Rechercher" />
-                        <TextField layoutX="427.0" layoutY="565.0" />
+                        <Button layoutX="163.0" layoutY="560.0" mnemonicParsing="false" onAction="#ajouter" text="Ajouter">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/Actions-list-add-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button layoutX="246.0" layoutY="560.0" mnemonicParsing="false" onAction="#modifier" text="Modifier">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/Pencil-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button layoutX="335.0" layoutY="560.0" mnemonicParsing="false" onAction="#supprimer" text="Supprimer">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/Trash-empty-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <TextField fx:id="filter" layoutX="435.0" layoutY="560.0" prefHeight="32.0" prefWidth="149.0" promptText="Rechercher" />
           </children>
         </AnchorPane>
 		</content>
@@ -106,12 +120,25 @@
                         <TextField fx:id="dbuser" layoutX="154.0" layoutY="273.0" />
                         <TextField fx:id="dbpassword" layoutX="154.0" layoutY="305.0" />
                         <TextField fx:id="version" layoutX="154.0" layoutY="339.0" />                        
-                        <Button layoutX="154.0" layoutY="387.0" mnemonicParsing="false" onAction="#enregistrer" prefHeight="10.0" prefWidth="74.0" text="Enregistrer" />
-                        <Button layoutX="245.0" layoutY="387.0" mnemonicParsing="false" onAction="#annuler" text="Annuler" />
+                        <Button layoutX="97.0" layoutY="384.0" mnemonicParsing="false" onAction="#enregistrer" prefHeight="32.0" prefWidth="109.0" text="Enregistrer">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/Actions-dialog-ok-apply-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                        <Button layoutX="217.0" layoutY="384.0" mnemonicParsing="false" onAction="#annuler" text="Annuler">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/Actions-edit-delete-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
           </children>
         </AnchorPane>
       </items>
     </SplitPane>
   </children>
 </AnchorPane>
-    

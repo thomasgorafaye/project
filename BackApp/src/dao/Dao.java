@@ -17,7 +17,7 @@ import java.sql.Statement;
 public class Dao {
      // JDBC driver name and database URL 
    final String JDBC_DRIVER = "org.h2.Driver";   
-   final String DB_URL = "jdbc:h2:~/test";  
+   final String DB_URL = "jdbc:h2:~/base";  
    
    //  Database credentials 
    final String USER = "sa"; 
@@ -93,8 +93,8 @@ public class Dao {
             " PRIMARY KEY ( id ))";  
          stmt.executeUpdate(sql);
          stmt = conn.createStatement(); 
-         sql =  "CREATE TABLE IF NOT EXISTS BACKUP " + 
-            "(timestamp INTEGER not NULL, " + 
+         sql =  "CREATE TABLE IF NOT EXISTS BACKUP " +  
+            "(timestamp BIGINT not NULL, " + 
             " date DATE, " +  
             " time VARCHAR(255), " +
             " type VARCHAR(255), " + 
@@ -110,12 +110,27 @@ public class Dao {
             " host VARCHAR(255), " +
             " plan INTEGER, " +
             " PRIMARY KEY ( timestamp ))";
+         stmt.executeUpdate(sql);
          stmt = conn.createStatement(); 
          sql =  "CREATE TABLE IF NOT EXISTS CRON " + 
             "(id INTEGER not NULL, " + 
             " expression VARCHAR(255), " +  
             " active BOOLEAN, " +
             " plan INTEGER, " +
+            " PRIMARY KEY ( id ))";
+         stmt.executeUpdate(sql);
+         stmt = conn.createStatement(); 
+         sql =  "CREATE TABLE IF NOT EXISTS VARIANT " +  
+            "(id IDENTITY, " + 
+            " type VARCHAR(255), " + 
+            " method VARCHAR(255), " +
+            " object VARCHAR(255), " + 
+            " name VARCHAR(255), " + 
+            " strategy VARCHAR(255), " + 
+            " s_repertory VARCHAR(255), " + 
+            " d_repertory VARCHAR(255), " + 
+            " log VARCHAR(255), " + 
+            " description VARCHAR(255), " +
             " PRIMARY KEY ( id ))";
          stmt.executeUpdate(sql);
          System.out.println("Created tables in given database..."); 

@@ -32,7 +32,7 @@ public class CronDao extends Dao {
          List<Cron> list = new ArrayList();
          while(rs.next()) { 
             // Retrieve by column name 
-            Cron h =  new Cron(rs.getInt(1),rs.getString(2),rs.getBoolean(2));
+            Cron h =  new Cron(rs.getInt(1),rs.getString(2),rs.getBoolean(3),rs.getInt(4));
             list.add(h);       
       
          } 
@@ -65,7 +65,7 @@ public class CronDao extends Dao {
          Cron h = null;
          while(rs.next()) { 
             // Retrieve by column name 
-            h =  new Cron(rs.getInt(1),rs.getString(2),rs.getBoolean(2));
+            h =  new Cron(rs.getInt(1),rs.getString(2),rs.getBoolean(3),rs.getInt(4));
          } 
          
          // STEP 5: Clean-up environment 
@@ -112,7 +112,7 @@ public class CronDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "Update Plan " + "Set active="+h.isActive()+" and expression='"+h.getExpression()+"' where id="+h.getId()+""; 
+         String sql = "Update Cron " + "Set active="+h.isActive()+", expression='"+h.getExpression()+"', plan="+h.getPlan()+" where id="+h.getId()+""; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Updated records into the table..."); 
@@ -151,27 +151,50 @@ public class CronDao extends Dao {
       } //end try
         return false;
     }
-    
-     public Cron findByPlan(String sid){
-           openConnection();
+     
+    public boolean deleteByPlan(int idPlan){
+         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "SELECT * FROM Cron where plan = "+sid+""; 
+         String sql = "Delete Cron " + "where plan="+idPlan+""; 
+         
+         stmt.executeUpdate(sql); 
+         System.out.println("Deleted records into the table..."); 
+         
+         closeConnection();
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try
+        return false;
+    }
+    
+     public List<Cron> findByPlan(int plan){
+        openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT * FROM Cron where plan="+plan+""; 
          ResultSet rs = stmt.executeQuery(sql); 
          
          // STEP 4: Extract data from result set 
-         Cron h = null;
+         List<Cron> list = new ArrayList();
          while(rs.next()) { 
             // Retrieve by column name 
-            h = new Cron(rs.getInt(1),rs.getString(2),rs.getBoolean(2));
+            Cron h =  new Cron(rs.getInt(1),rs.getString(2),rs.getBoolean(3),rs.getInt(4));
+            list.add(h);       
+      
          } 
-         
          // STEP 5: Clean-up environment 
          rs.close(); 
-         System.out.println("Find one in database..."); 
+         System.out.println("Find all in database..."); 
          
          closeConnection();
-         return h;
+         return list;
       } catch(SQLException se) { 
          //Handle errors for JDBC 
          se.printStackTrace(); 
@@ -182,5 +205,33 @@ public class CronDao extends Dao {
          closeConnection();
       } //end try  
         return null;
+    }
+     
+    public int getTotal(){
+        openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT count(*) FROM Cron"; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set
+         rs.next();
+         int result = rs.getInt(1);
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+         System.out.println("Find Total..."); 
+         
+         closeConnection();
+         return result;
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try  
+        return 0;
     }
 }

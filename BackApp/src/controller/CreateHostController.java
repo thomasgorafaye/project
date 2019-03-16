@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.Host;
 import service.HostService;
+import tool.Notification;
 
 /**
  *
@@ -71,6 +72,7 @@ public class CreateHostController implements Initializable {
         Host h = new Host(sid.getText(),hostname.getText(),ownername.getText(),email.getText(),osname.getText(),osuser.getText(),ospassword.getText(),dbuser.getText(),dbpassword.getText(),version.getText());
         hostService.create(h);
         listView.getItems().add(h);
+        Notification.notifySuccess("Enregistrement avec succès", "La base de données été bien enregistrée");
     }
     
     @FXML

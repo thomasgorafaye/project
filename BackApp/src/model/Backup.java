@@ -39,9 +39,22 @@ public class Backup {
     private int plan;
 
     public Backup() {
+        this.timestamp = new SimpleLongProperty();
+        this.date = new SimpleObjectProperty();
+        this.time = new SimpleStringProperty();
+        this.type = new SimpleStringProperty();
+        this.method = new SimpleStringProperty();
+        this.object = new SimpleStringProperty();
+        this.name = new SimpleStringProperty();
+        this.strategy = new SimpleStringProperty();
+        this.s_repertory = new SimpleStringProperty();
+        this.d_repertory = new SimpleStringProperty();
+        this.log = new SimpleStringProperty();
+        this.success = new SimpleBooleanProperty();
+        this.planned = new SimpleBooleanProperty();
     }
 
-    public Backup(long timestamp, Date date, String time, String type, String method, String object, String name, String strategy, String s_repertory, String d_repertory, String log, boolean success, boolean planned) {
+    public Backup(long timestamp, Date date, String time, String type, String method, String object, String name, String strategy, String s_repertory, String d_repertory, String log, boolean success, boolean planned, String host, int plan) {
         this.timestamp = new SimpleLongProperty(timestamp);
         this.date = new SimpleObjectProperty(date);
         this.time = new SimpleStringProperty(time);
@@ -55,6 +68,8 @@ public class Backup {
         this.log = new SimpleStringProperty(log);
         this.success = new SimpleBooleanProperty(success);
         this.planned = new SimpleBooleanProperty(planned);
+        this.host = host;
+        this.plan = plan;
     }
 
     public long getTimestamp() {
@@ -144,6 +159,10 @@ public class Backup {
     public void setLog(String log) {
         this.log.set(log);
     }
+    
+    public BooleanProperty successProperty() {
+        return success;
+    }
 
     public boolean isSuccess() {
         return success.get();
@@ -151,6 +170,10 @@ public class Backup {
 
     public void setSuccess(boolean success) {
         this.success.set(success);
+    }
+    
+    public BooleanProperty plannedProperty() {
+        return planned;
     }
 
     public boolean isPlanned() {
@@ -179,7 +202,7 @@ public class Backup {
 
     @Override
     public String toString() {
-        return "Backup{" + "timestamp=" + timestamp + ", date=" + date + ", time=" + time + ", type=" + type + ", method=" + method + ", object=" + object + ", name=" + name + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + ", success=" + success + ", planned=" + planned + '}';
+        return "Backup{" + "timestamp=" + timestamp + ", date=" + date + ", time=" + time + ", type=" + type + ", method=" + method + ", object=" + object + ", name=" + name + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + ", success=" + success + ", planned=" + planned + ", host=" + host + ", plan=" + plan + '}';
     }
     
     

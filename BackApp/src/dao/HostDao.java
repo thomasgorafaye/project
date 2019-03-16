@@ -86,6 +86,39 @@ public class HostDao extends Dao {
         return null;
     }
     
+     public List<String> findAllSid(){
+        openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT sid FROM Host"; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set 
+         List<String> list = new ArrayList();
+         while(rs.next()) { 
+            // Retrieve by column name 
+            String h = rs.getString(1);
+            list.add(h);       
+      
+         } 
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+         System.out.println("Find all sid in database..."); 
+         
+         closeConnection();
+         return list;
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try  
+        return null;
+    }
+    
     public boolean create(Host h){
         openConnection();
       try {
@@ -112,7 +145,7 @@ public class HostDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "Update Host " + "Set hostname='"+h.getHostname()+"' and ownername='"+h.getOwnername()+"' and email='"+h.getEmail()+"' and osname='"+h.getOsname()+"' and osuser='"+h.getOsuser()+"' and ospassword='"+h.getOspassword()+"' and dbuser='"+h.getDbuser()+"' and dbpassword='"+h.getDbpassword()+"' and version='"+h.getVersion()+"' where sid='"+h.getSid()+"'"; 
+         String sql = "Update Host " + "Set hostname='"+h.getHostname()+"', ownername='"+h.getOwnername()+"', email='"+h.getEmail()+"', osname='"+h.getOsname()+"', osuser='"+h.getOsuser()+"', ospassword='"+h.getOspassword()+"', dbuser='"+h.getDbuser()+"', dbpassword='"+h.getDbpassword()+"', version='"+h.getVersion()+"' where sid='"+h.getSid()+"'"; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Updated records into the table..."); 
@@ -150,6 +183,34 @@ public class HostDao extends Dao {
          closeConnection();
       } //end try
         return false;
+    }
+     
+    public long getTotal(){
+        openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT count(*) FROM Host"; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set 
+         rs.next();
+         long result = rs.getLong(1);
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+         System.out.println("Find Total..."); 
+         
+         closeConnection();
+         return result;
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try  
+        return 0;
     }
     
 }

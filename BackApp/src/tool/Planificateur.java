@@ -30,38 +30,42 @@ import org.quartz.impl.triggers.SimpleTriggerImpl;
  */
 public class Planificateur {
     
-    static SchedulerFactory factory = new StdSchedulerFactory();
+    final static SchedulerFactory factory = new StdSchedulerFactory();
+    private static Scheduler scheduler = null;
     
-    public static void plan(Host host, Plan plan) throws ParseException{      
+    public static void plan(Host host, Plan plan, Cron cron) throws ParseException{    
         try {
-            Scheduler scheduler = factory.getScheduler();
-            scheduler.start();
-            Iterator<Cron> it = plan.getCrons().iterator();
-            while(it.hasNext()){
-                Cron cron = it.next();
+            if (scheduler == null) {
+                scheduler = factory.getScheduler();
+                scheduler.start();
+            }
                 final JobDetailImpl jobDetail = new JobDetailImpl();
                 jobDetail.setName("Mon job");
                 jobDetail.setJobClass(BackupJob.class);
-                Backup backup = new Backup();
                 JobDataMap jobDataMap = new JobDataMap();
-                jobDataMap.put("backup", backup);
+                jobDataMap.put("plan", plan);
                 jobDataMap.put("host", host);
                 jobDetail.setJobDataMap(jobDataMap);
                 final CronTriggerImpl cronTrigger = new CronTriggerImpl();
                 cronTrigger.setStartTime(new Date(System.currentTimeMillis() + 1000));
-                String cronExpression = CronConvert.toString(cron);
-                cronTrigger.setCronExpression(cronExpression);
+                //cronTrigger.setCronExpression(cron.getExpression());
+                cronTrigger.setCronExpression("0 0/2 * * * ?");
                 cronTrigger.setName("Trigger execution toutes les 5 secondes");
+                /*final SimpleTriggerImpl simpleTrigger = new SimpleTriggerImpl();
+                simpleTrigger.setStartTime(new Date(System.currentTimeMillis() + 1000));
+                simpleTrigger.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+                simpleTrigger.setEndTime(new Date(System.currentTimeMillis() + 650000));
+                simpleTrigger.setRepeatInterval(200000);
+                simpleTrigger.setName("Trigger execution toutes les 4 minutes");*/
                 scheduler.scheduleJob(jobDetail, cronTrigger);
-            }
-            System.in.read();
+            //System.in.read();
             if (scheduler != null) {
-                scheduler.shutdown();
+                //scheduler.shutdown();
             }
         } catch (final SchedulerException e) {
             e.printStackTrace();
-        } catch (final IOException e) {
+        } /*catch (final IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

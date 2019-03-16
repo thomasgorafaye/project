@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Host;
 import model.Plan;
-import tool.Planificateur;
+import backapp.BackApp;
 
 /**
  *
@@ -34,12 +34,8 @@ public class PlanService {
         return planDao.find(sid);
     }
     
-    public boolean create(Host h, Plan p){
-        try {
-            Planificateur.plan(h, p);
-        } catch (ParseException ex) {
-            Logger.getLogger(PlanService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public boolean create(Plan p){
+        BackApp.planInProc = p;
         return planDao.create(p);
     }
     
@@ -49,6 +45,14 @@ public class PlanService {
     
      public boolean delete(Plan h){
         return planDao.delete(h);
+    }
+     
+    public boolean deleteByHost(String host){
+        return planDao.deleteByHost(host);
+    }
+     
+     public int getTotal(){
+        return planDao.getTotal();
     }
     
 }

@@ -8,6 +8,7 @@
 <?import com.jfoenix.validation.NumberValidator?>
 <?import eu.hansolo.medusa.Clock?>
 <?import eu.hansolo.tilesfx.Tile?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -83,6 +84,7 @@
             <RoundImageView layoutX="495.0" layoutY="144.0" />
             <StatusBar layoutX="511.0" layoutY="195.0" />
             <Clock layoutX="405.0" layoutY="237.0" prefHeight="132.0" prefWidth="149.0" />
+            <ComboBox editable="true" layoutX="23.0" layoutY="101.0" prefWidth="150.0" />
       </children>
     </AnchorPane>
       <Tile prefHeight="50.0" prefWidth="640.0" />

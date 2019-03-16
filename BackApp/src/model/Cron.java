@@ -28,10 +28,11 @@ public class Cron {
         
     }
 
-    public Cron(int id, String expression, boolean active) {
+    public Cron(int id, String expression, boolean active, int plan) {
         this.id = new SimpleIntegerProperty(id);
         this.expression = new SimpleStringProperty(expression);
         this.active = new SimpleBooleanProperty(active);
+        this.plan = plan;
     }
 
     public int getId() {
@@ -48,6 +49,10 @@ public class Cron {
 
     public void setExpression(String expression) {
         this.expression.set(expression);
+    }
+    
+    public BooleanProperty activeProperty(){
+        return active;
     }
 
     public boolean isActive() {
@@ -76,7 +81,7 @@ public class Cron {
 
     @Override
     public String toString() {
-        return "Cron{" + "id=" + id + ", expression=" + expression + ", active=" + active + '}';
+        return "Cron{" + "id=" + id + ", expression=" + expression + ", active=" + active + ", plan=" + plan +'}';
     }
     
 }

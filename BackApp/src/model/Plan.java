@@ -38,7 +38,7 @@ public class Plan {
     public Plan() {
     }
 
-    public Plan(int id, boolean active, String script, String object, String name, String type, String method, String strategy, String s_repertory, String d_repertory, String log) {
+    public Plan(int id, boolean active, String script,String object, String name, String type, String method, String strategy, String s_repertory, String d_repertory, String log, String host) {
         this.id = new SimpleIntegerProperty(id);
         this.active = new SimpleBooleanProperty(active);
         this.script = new SimpleStringProperty(script);
@@ -50,6 +50,7 @@ public class Plan {
         this.s_repertory = new SimpleStringProperty(s_repertory);
         this.d_repertory = new SimpleStringProperty(d_repertory);
         this.log = new SimpleStringProperty(log);
+        this.host = host;
     }
 
     public int getId() {
@@ -58,6 +59,10 @@ public class Plan {
 
     public void setId(int id) {
         this.id.set(id);
+    }
+    
+    public BooleanProperty activeProperty(){
+        return active;
     }
 
     public boolean isActive() {
@@ -168,7 +173,7 @@ public class Plan {
 
     @Override
     public String toString() {
-        return "Plan{" + "id=" + id + ", active=" + active + ", script=" + script + ", object=" + object + ", name=" + name + ", type=" + type + ", method=" + method + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + '}';
+        return "Plan{" + "id=" + id + ", active=" + active + ", script=" + script + ", object=" + object + ", name=" + name + ", type=" + type + ", method=" + method + ", strategy=" + strategy + ", s_repertory=" + s_repertory + ", d_repertory=" + d_repertory + ", log=" + log + ", host=" + host +'}';
     }
     
 }

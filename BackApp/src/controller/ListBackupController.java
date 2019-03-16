@@ -5,20 +5,28 @@
  */
 package controller;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import model.Backup;
 import model.Host;
 import service.BackupService;
@@ -30,17 +38,20 @@ import service.BackupService;
 public class ListBackupController implements Initializable {
     
     @FXML
-    private TextField type,method,object,name,strategy,s_repertory,d_repertory,log;
+    private TextField filter;
     
     @FXML 
     private TableView tableView;
     
     private BackupService backupService;
     
-    @FXML 
-    private Label entete;
+    private final String listType[] = {"Sauvegarde à chaud","Sauvegarde à froid"};
+    private final String listMethod[] = {"Xcopy","Rman","Import/Export"};
+    private final String listObject[] = {"database","schema","user","tablespace","table"};
+    private final String listStrategy[] = {"Saugarde complète","Full sauvegarde","Différentielle niveau 0","Cumulative niveau 0","Différentielle niveau 1","Cumulative niveau 1","Différentielle niveau 2","Cumulative niveau 2"};
     
     private ObservableList<Backup> BackupList = FXCollections.observableArrayList();
+    private ObservableList<Backup> BackupListFilter = FXCollections.observableArrayList();
     
     private Backup selected;
     
@@ -48,8 +59,9 @@ public class ListBackupController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
        backupService = new BackupService();
         BackupList.addAll(backupService.findAll());
-        tableView.getItems().addAll(BackupList);
-        tableView.getItems().add(new Backup(1,new Date(),"Rose","Rose","Rose","Rose","Rose","Rose","Rose","Rose","Rose",true,true));
+        BackupListFilter.addAll(BackupList);
+        tableView.setItems(BackupListFilter);
+        //planned.setCellFactory(CheckBoxTableCell.forTableColumn(planned));    //it works fine
         tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Backup>() {
             @Override
             public void changed(ObservableValue<? extends Backup> observable, Backup oldValue, Backup newValue) {
@@ -57,59 +69,54 @@ public class ListBackupController implements Initializable {
                 System.out.println("Selected item: " + newValue);
             }
         });
-    }
-
-    @FXML
-    private void enregistrer(ActionEvent event) {
-        System.out.println("You clicked me!");
-        Backup b = new Backup();
-        if(entete.getText().equals("Enregistrement")){
-        //hostService.create(h);
-        tableView.getItems().add(b);
-        }else{
-           int index = tableView.getItems().indexOf(selected);
-           tableView.getItems().set(index, b);
-        }
-        //backupService.coldBackupXcopy(selected, b);
-        
-    }
-    
-    @FXML
-    private void annuler(ActionEvent event) {
-        System.out.println("You clicked me!");
-        type.clear();method.clear();object.clear();name.clear();strategy.clear();s_repertory.clear();d_repertory.clear();log.clear();
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        BackupList.addListener(new ListChangeListener<Backup>(){
+            @Override
+           public void onChanged(ListChangeListener.Change<? extends Backup> change){
+               updateFilteredData();
+           }
+        });
+        filter.textProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                updateFilteredData();
+            }
+            
+        });
     }
     
     @FXML
     private void supprimer(ActionEvent event) {
         System.out.println("You clicked me!");
         if(selected != null){
-            //hostService.delete(selected);
+            backupService.delete(selected);
+            backupService.delete(selected);
             tableView.getItems().remove(selected);
         }  
     }
     
-    @FXML
-    private void modifier(ActionEvent event) {
-        System.out.println("You clicked me!");
-        if(selected != null){
-            //hostService.delete(selected);
-            entete.setText("Modification SID:"+selected.getTimestamp());
-            type.setText(selected.getType());
-            method.setText(selected.getMethod());
-            object.setText(selected.getObject());
-            name.setText(selected.getName());
-            strategy.setText(selected.getStrategy());
-            s_repertory.setText(selected.getS_repertory());
-            d_repertory.setText(selected.getD_repertory());
-            log.setText(selected.getLog());
-        }  
+    private void updateFilteredData(){
+        BackupListFilter.clear();
+        for(Backup h : BackupList){
+            if(matchesFilter(h)){
+                BackupListFilter.add(h);
+            }
+        }
+        ArrayList<TableColumn<Backup,?>> sortOrder = new ArrayList<>(tableView.getSortOrder());
+        tableView.getSortOrder().clear();
+        tableView.getSortOrder().addAll(sortOrder);
     }
-    
-    @FXML
-    private void ajouter(ActionEvent event) {
-        System.out.println("You clicked me!");
-        entete.setText("Enregistrement");
+
+    private boolean matchesFilter(Backup h) {
+        String filterString = filter.getText();
+        if((filterString == null)||filterString.isEmpty()){
+            return true;
+        }
+        String lowerCaseFilterString = filterString.toLowerCase();
+        if(h.toString().toLowerCase().contains(lowerCaseFilterString)){
+            return true;
+        }
+        return false;
     }
     
 }

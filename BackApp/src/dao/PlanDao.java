@@ -32,7 +32,7 @@ public class PlanDao extends Dao {
          List<Plan> list = new ArrayList();
          while(rs.next()) { 
             // Retrieve by column name 
-            Plan h =  new Plan(rs.getInt(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11));
+            Plan h =  new Plan(rs.getInt(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));
             list.add(h);       
       
          } 
@@ -65,7 +65,7 @@ public class PlanDao extends Dao {
          Plan h = null;
          while(rs.next()) { 
             // Retrieve by column name 
-            h = new Plan(rs.getInt(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11));      
+            h = new Plan(rs.getInt(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));      
          } 
          
          // STEP 5: Clean-up environment 
@@ -112,7 +112,7 @@ public class PlanDao extends Dao {
         openConnection();
       try {
          //STEP 3: Execute a query 
-         String sql = "Update Plan " + "Set active="+h.isActive()+" and script='"+h.getScript()+"' and object='"+h.getObject()+"' and name='"+h.getName()+"' and type='"+h.getType()+"' and method='"+h.getMethod()+"' and strategy='"+h.getStrategy()+"' and s_repertory='"+h.getS_repertory()+"'and d_repertory='"+h.getD_repertory()+"' and log='"+h.getLog()+"' where id="+h.getId()+""; 
+         String sql = "Update Plan " + "Set active="+h.isActive()+", script='"+h.getScript()+"', object='"+h.getObject()+"', name='"+h.getName()+"', type='"+h.getType()+"', method='"+h.getMethod()+"', strategy='"+h.getStrategy()+"', s_repertory='"+h.getS_repertory()+"', d_repertory='"+h.getD_repertory()+"', log='"+h.getLog()+"', host='"+h.getHost()+"' where id="+h.getId()+""; 
          
          stmt.executeUpdate(sql); 
          System.out.println("Updated records into the table..."); 
@@ -151,6 +151,28 @@ public class PlanDao extends Dao {
       } //end try
         return false;
     }
+     
+    public boolean deleteByHost(String host){
+         openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "Delete Plan " + "where host='"+host+"'"; 
+         
+         stmt.executeUpdate(sql); 
+         System.out.println("Deleted records into the table..."); 
+         
+         closeConnection();
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try
+        return false;
+    }
     
      public Plan findByHost(String sid){
            openConnection();
@@ -163,7 +185,7 @@ public class PlanDao extends Dao {
          Plan h = null;
          while(rs.next()) { 
             // Retrieve by column name 
-            h = new Plan(rs.getInt(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11));      
+            h = new Plan(rs.getInt(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));      
          } 
          
          // STEP 5: Clean-up environment 
@@ -182,5 +204,33 @@ public class PlanDao extends Dao {
          closeConnection();
       } //end try  
         return null;
+    }
+    
+    public int getTotal(){
+        openConnection();
+      try {
+         //STEP 3: Execute a query 
+         String sql = "SELECT count(*) FROM Plan"; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set
+         rs.next();
+         int result = rs.getInt(1);
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+         System.out.println("Find Total..."); 
+         
+         closeConnection();
+         return result;
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         closeConnection();
+      } //end try  
+        return 0;
     }
 }

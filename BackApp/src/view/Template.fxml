@@ -6,20 +6,17 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.Tooltip?>
 
 <VBox fx:id="root" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TemplateController">
   <children>
@@ -52,7 +49,62 @@
         </Menu>
       </menus>
     </MenuBar>
-    <VBox fx:id="anchorPane" VBox.vgrow="ALWAYS"/>
+    <fx:define>
+        <Image fx:id="iDashboard" url="@/image/Actions-dashboard-show-icon.png" />
+        <Image fx:id="iCreateBackup" url="@/image/Folder-Backups-icon.png" />
+        <Image fx:id="iCreatePlan" url="@/image/Backup-icon.png" />
+        <Image fx:id="iCreateHost" url="@/image/Misc-New-Database-icon.png" />
+        <Image fx:id="iListBackup" url="@/image/database-icon.png" />
+        <Image fx:id="iListPlan" url="@/image/Folder-Download-icon.png" />
+        <Image fx:id="iListHost" url="@/image/database-settings-icon.png" />
+        <Image fx:id="iBack" url="@/image/Actions-go-previous-icon.png" />
+        <Image fx:id="iListCron" url="@/image/Actions-go-next-icon.png" />
+    </fx:define>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+            <Button accessibleHelp="Help" accessibleText="Text" mnemonicParsing="false" onAction="#Dashboard" >
+                <graphic><ImageView image="$iDashboard" /></graphic>
+                <tooltip><Tooltip text="Tableau de bord" /></tooltip>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="3.0" prefWidth="7.0" />
+            <Button accessibleHelp="Help" accessibleText="Text" mnemonicParsing="false" onAction="#Createbackup" >
+                <graphic><ImageView image="$iCreateBackup" /></graphic>
+                <tooltip><Tooltip text="Nouvelle sauvegarde" /></tooltip>
+            </Button>
+          <Button mnemonicParsing="false" onAction="#Listbackup" >
+                <graphic><ImageView image="$iListBackup" /></graphic>
+                <tooltip><Tooltip text="Historique sauvegarde" /></tooltip>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#Createplan" >
+                <graphic><ImageView image="$iCreatePlan" /></graphic>
+                <tooltip><Tooltip text="Planifier sauvegarde" /></tooltip>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#Listplan">
+                <graphic><ImageView image="$iListPlan" /></graphic>
+                <tooltip><Tooltip text="Gérer planification" /></tooltip>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="3.0" prefWidth="7.0" />
+            <Button mnemonicParsing="false" onAction="#Createhost">
+                <graphic><ImageView image="$iCreateHost" /></graphic>
+                <tooltip><Tooltip text="Nouvelle base de données" /></tooltip>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#Listhost">
+                <graphic><ImageView image="$iListHost" /></graphic>
+                <tooltip><Tooltip text="Gérer bases de données" /></tooltip>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="3.0" prefWidth="7.0" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#Back">
+                <graphic><ImageView image="$iBack" /></graphic>
+                <tooltip><Tooltip text="Retour" /></tooltip>
+            </Button>
+            <Button fx:id="next" mnemonicParsing="false" onAction="#Listcron">
+                <graphic><ImageView image="$iListCron" /></graphic>
+                <tooltip><Tooltip text="Suivant" /></tooltip>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="3.0" prefWidth="7.0" />
+        </items>
+      </ToolBar>
+    <VBox fx:id="anchorPane" accessibleRole="BUTTON" VBox.vgrow="ALWAYS" />
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <children>
         <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">

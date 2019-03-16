@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 class AfficheurFlux implements Runnable {
 
     private final InputStream inputStream;
+    private int result = 0;
 
     AfficheurFlux(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -32,10 +33,16 @@ class AfficheurFlux implements Runnable {
         String ligne = "";
         try {
             while ((ligne = br.readLine()) != null) {
+                if(ligne.equalsIgnoreCase("noarchivelog"))
+                    result = 1;
                 System.out.println(ligne);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public int getResult(){
+        return result;
     }
 }
